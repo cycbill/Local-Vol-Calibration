@@ -15,8 +15,8 @@ class FDMEulerExplicit():
         self.set_initial_conditions()
         
     def calculate_step_size(self):
-        self.dx = self.x_dom / (self.J )
-        self.dt = self.t_dom / (self.N )
+        self.dx = self.x_dom / (self.J - 1)
+        self.dt = self.t_dom / (self.N - 1)
         
     def set_initial_conditions(self):
         self.x_values = np.linspace(0, self.x_dom, self.J, endpoint=True)
@@ -48,16 +48,16 @@ class FDMEulerExplicit():
             
         A[-1] = - alpha[-1] + gamma[-1]
         B[-1] = 1 - beta[-1] - 2 * gamma[-1]
-        D[-1] = (alpha[-1] - gamma[-1]) * self.old_result[-2] + (1 + beta[-1] + 2 * gamma[-1]) * self.old_result[-1]
+        D[-1] = (alpha[-1] - gamma[-1]) * self.old_result[-3] + (1 + beta[-1] + 2 * gamma[-1]) * self.old_result[-2]
 
-        coeff_matrix = diags([A, B, C], [-1, 0, 1], shape=(self.J - 2, self.J - 2)).toarray()
+        coeff_matrix = diags([A[1:], B, C[:-1]], [-1, 0, 1], shape=(self.J - 2, self.J - 2)).toarray()
         solved_vector = np.linalg.solve(coeff_matrix, D)
         self.new_result[1:-1] = solved_vector
         
 
     def step_march(self):
-        for n in range(self.N):
-            self.cur_t = self.t_dom - (n + 1) * self.dt
+        for n in range(1, self.N):
+            self.cur_t = self.t_dom - n * self.dt
             self.calculate_boundary_conditions()
             self.calculate_inner_domain()
             self.old_result = self.new_result

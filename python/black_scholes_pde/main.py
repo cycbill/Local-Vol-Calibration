@@ -11,10 +11,10 @@ r = 0.25
 v = 0.2
 T = 1.00
 
-x_dom = 3.0
-J = 51
+x_dom = 1.0
+J = 21
 t_dom = T
-N = 50
+N = 21
 
 pay_off_call = PayOffCall(K)
 call_option = VanillaOption(K, r, T, v, pay_off_call)
