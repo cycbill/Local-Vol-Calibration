@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy.sparse import diags
 import matplotlib.pyplot as plt
-from pde import BlackScholesPDE
+from bs_pde import BlackScholesPDE
 
 class FDMEulerExplicit():
     def __init__(self, _x_dom, _J, _t_dom, _N, _pde):

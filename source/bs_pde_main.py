@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from fdm import FDMEulerExplicit
-from pde import BlackScholesPDE
+from bs_fdm import FDMEulerExplicit
+from bs_pde import BlackScholesPDE
 from option import VanillaOption
 from payoff import PayOffCall, PayOffPut
 
