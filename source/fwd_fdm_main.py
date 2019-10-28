@@ -8,9 +8,9 @@ from fwd_pde import ForwardPDE
 from fwd_fdm import FDMCrankNicolsonNeumann
 
 
-S = 0.5
+S = 0.6
 r = 0.25
-loc_vol_inputs = np.repeat(0.2, 7)
+loc_vol_inputs = np.repeat(0.25, 7)
 k_inputs = np.array([-0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3])
 T = 1.00
 
@@ -25,7 +25,7 @@ call_option = CalibrationBasketVanillaOption(S, r, T, loc_vol_para)
 bs_pde = ForwardPDE(call_option)
 fdm_euler = FDMCrankNicolsonNeumann(x_min, x_dom, J, t_dom, N, bs_pde)
 
-prices = fdm_euler.step_march()
+prices, x_values = fdm_euler.step_march()
 
-plt.plot(prices)
+plt.plot(x_values, prices)
 plt.show()

@@ -61,7 +61,7 @@ class FDMEulerExplicit():
             self.calculate_boundary_conditions()
             self.calculate_inner_domain()
             self.old_result = self.new_result
-            plt.plot(self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5))
+            plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5))
             self.prev_t = self.cur_t
-        return self.old_result
+        return self.old_result, self.x_values
 
