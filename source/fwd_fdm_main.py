@@ -10,9 +10,13 @@ from fwd_fdm import FDMCrankNicolsonNeumann
 
 S = 0.6
 r = 0.25
-loc_vol_inputs = np.repeat(0.25, 7)
-k_inputs = np.array([-0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3])
 T = 1.00
+loc_vol_inputs = np.repeat(0.25, 7)
+K_inputs = np.array([0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9])
+F = S * np.exp(r*T)
+
+k_inputs = np.log(K_inputs / F)
+
 
 x_min = -1.0
 x_dom = 1.0
@@ -29,3 +33,9 @@ prices, x_values = fdm_euler.step_march()
 
 plt.plot(x_values, prices)
 plt.show()
+
+print("Forward: ", F)
+print("Strike: ", K_inputs[3])
+print("log moneyness: ", k_inputs[3])
+price_interp_func = PiecewiseLinearParameter1D(x_values, prices)
+print("premium: ", price_interp_func.interpolate(k_inputs[3]))

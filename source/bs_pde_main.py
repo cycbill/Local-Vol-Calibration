@@ -38,7 +38,8 @@ plt.show()
 ## assume spot is 0.6
 S = 0.6
 F = S * np.exp(r * T)   # 0.7704152500126448
-print("Forward: ", F)
-
+print("Forward: ", F)   # -0.4323215567939545
+print("Strike: ", K)
 k = np.log(K/F)
 print("log moneyness: ", k)
+print("premium: ", bs_price_by_spot(S))
