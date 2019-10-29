@@ -9,4 +9,4 @@ class CalibrationBasketVanillaOption():
         self.fwd = self.spot * np.exp(self.r * self.T)
         
     def payoff_by_logmoney(self, logmoney):
-        return np.maximum(self.spot - self.fwd * np.exp(logmoney), 0)
+        return np.maximum(self.spot - np.exp(logmoney), 0)
