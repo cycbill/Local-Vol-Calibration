@@ -25,6 +25,7 @@ class FDMCrankNicolsonNeumann():
         self.new_result = np.zeros_like(self.old_result)
         self.prev_t = 0
         self.cur_t = 0
+        plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5), linestyle='--')
         
     def calculate_boundary_conditions(self):
         #self.new_result[0] = self.pde.boundary_left(self.cur_t, self.x_values[0])
@@ -64,7 +65,8 @@ class FDMCrankNicolsonNeumann():
             self.calculate_inner_domain()
             self.calculate_boundary_conditions()
             self.old_result = self.new_result
-            plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5))
+            if n < 2:
+                plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5))
             self.prev_t = self.cur_t
         return self.old_result, self.x_values
 

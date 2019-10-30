@@ -31,7 +31,7 @@ fdm_euler = FDMCrankNicolsonNeumann(x_min, x_dom, J, t_dom, N, bs_pde)
 
 prices, x_values = fdm_euler.step_march()
 
-plt.plot(x_values, prices)
+#plt.plot(x_values, prices)
 plt.show()
 
 print("Forward: ", F)
