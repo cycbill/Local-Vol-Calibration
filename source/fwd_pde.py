@@ -9,11 +9,12 @@ class ForwardPDE():
         
     def diff_coeff(self, t, x):
         loc_vol = self.option.loc_vol
-        return 0.5 * (loc_vol.interpolate(x)**2) * (x**2)
+        return 0.5 * loc_vol.interpolate(x)**2
     
     def conv_coeff(self, t, x):
         loc_vol = self.option.loc_vol
-        return - 0.5 * (loc_vol.interpolate(x)**2) * (x**2)
+        result = - 0.5 * loc_vol.interpolate(x)**2
+        return result
     
     def zero_coeff(self, t, x):
         return 0

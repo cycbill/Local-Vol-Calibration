@@ -31,7 +31,8 @@ class PiecewiseLinearParameter1D():
         self.interp_function = interp1d(self.x_inputs, self.value_inputs, fill_value=(self.value_inputs[0], self.value_inputs[-1]), bounds_error=False)
 
     def interpolate(self, x):
-        return self.interp_function(x)
+        result = self.interp_function(x)
+        return result
 
     def integral(self, x0, x1):
         result, _ = quad(self.interp_function, x0, x1)
