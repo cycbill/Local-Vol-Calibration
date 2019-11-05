@@ -2,37 +2,40 @@ import numpy as np
 import pandas as pd
 from scipy.sparse import diags
 import matplotlib.pyplot as plt
-from fwd_pde import ForwardPDE
+from initial_condition import InitialConditionFirstTenor, InitialConditionOtherTenors
 
-class FDMCrankNicolsonNeumann():
-    def __init__(self, _x_min, _x_dom, _J, _t_dom, _N, _pde):
+class FDMCrankNicolsonNeumannFirstMaturity():
+    def __init__(self, _x_min, _x_max, _J, _t_min, _t_max, _N, _init_condition):
         self.x_min = _x_min
-        self.x_dom = _x_dom
+        self.x_max = _x_max
         self.J = _J
-        self.t_dom = _t_dom
+        self.t_min = _t_min
+        self.t_max = _t_max
         self.N = _N
-        self.pde = _pde
+        self.init_condition = _init_condition
         self.calculate_step_size()
         self.set_initial_conditions()
         
     def calculate_step_size(self):
-        self.dx = (self.x_dom - self.x_min) / (self.J - 1)
-        self.dt = self.t_dom / (self.N - 1)
+        self.dx = (self.x_max - self.x_min) / self.J        # J is number of strike step intervals
+        self.dt = (self.t_max - self.t_min) / self.N        # N is number of maturity step intervals
         
     def set_initial_conditions(self):
-        self.x_values = np.linspace(self.x_min, self.x_dom, self.J, endpoint=True)
-        self.old_result = self.pde.init_cond(self.x_values)
+        self.x_values = np.linspace(self.x_min, self.x_max, self.J+1, endpoint=True)
+        self.old_result = self.init_condition.compute(self.x_values)
         self.new_result = np.zeros_like(self.old_result)
         self.prev_t = 0
         self.cur_t = 0
         plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5), linestyle='--')
-        
+
+    '''    
     def calculate_boundary_conditions(self):
         #self.new_result[0] = self.pde.boundary_left(self.cur_t, self.x_values[0])
         #self.new_result[-1] = self.pde.boundary_right(self.cur_t, self.x_values[-1])
         self.new_result[0] = 2 * self.new_result[1] - self.new_result[2]
         self.new_result[-1] = 2 * self.new_result[-2] - self.new_result[-3]
-        
+    '''
+
     def calculate_inner_domain(self):
         dt_diffu = self.dt * (self.pde.diff_coeff(self.prev_t, self.x_values[1:-1]))
         dtdxp2_conv = self.dt * self.dx * 0.5 * (self.pde.conv_coeff(self.prev_t, self.x_values[1:-1]))
@@ -63,7 +66,7 @@ class FDMCrankNicolsonNeumann():
         for n in range(1, self.N):
             self.cur_t = n * self.dt
             self.calculate_inner_domain()
-            self.calculate_boundary_conditions()
+            #self.calculate_boundary_conditions()
             self.old_result = self.new_result
             if n < 2:
                 plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5))

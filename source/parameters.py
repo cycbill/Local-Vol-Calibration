@@ -37,6 +37,19 @@ class PiecewiseLinearParameter1D():
         result, _ = quad(self.interp_function, x0, x1)
         return result
 
+class CubicSplineParameter1D():
+    def __init__(self, _x_inputs, _value_inputs):
+        self.x_inputs = _x_inputs
+        self.value_inputs = _value_inputs
+        self.interp_function = interp1d(self.x_inputs, self.value_inputs, fill_value=(self.value_inputs[0], self.value_inputs[-1]), kind='cubic', bounds_error=False)
+
+    def interpolate(self, x):
+        return self.interp_function(x)
+
+    def integral(self, x0, x1):
+        result, _ = quad(self.interp_function, x0, x1)
+        return result
+
 class PiecewiseLinearParameter2D():
     def __init__(self, _x_inputs, _y_inputs, _value_inputs):
         self.x_inputs = _x_inputs
