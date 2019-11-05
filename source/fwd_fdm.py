@@ -26,6 +26,8 @@ class FDMCrankNicolsonNeumannFirstMaturity():
         self.new_result = np.zeros_like(self.old_result)
         self.prev_t = 0
         self.cur_t = 0
+
+        
         plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5), linestyle='--')
 
     '''    
