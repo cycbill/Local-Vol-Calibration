@@ -1,9 +1,8 @@
 import numpy as np 
+from parameters import CubicSplineParameter1D
 
 class InitialConditionFirstTenor():
-    def __init__(_S):
-        self.S = _S
-    def compute(k):
+    def compute(self, k):
         return np.maximum(1 - np.exp(k), 0)
 
 class InitialConditionOtherTenors():
