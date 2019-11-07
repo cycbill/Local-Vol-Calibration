@@ -13,9 +13,9 @@ v = 0.2
 T = 1.00
 
 x_dom = 1.0
-J = 21
+J = 201
 t_dom = T
-N = 21
+N = 201
 
 pay_off_call = PayOffCall(K)
 call_option = VanillaOption(K, r, T, v, pay_off_call)
@@ -43,3 +43,15 @@ print("Strike: ", K)
 k = np.log(K/F)
 print("log moneyness: ", k)
 print("premium: ", bs_price_by_spot(S))
+
+
+plt.plot(x_values, prices - bs_closing_prices)
+plt.title('diff between pde & bs premium')
+plt.show()
+
+gamma = ( prices[0:-3] - 2 * prices[1:-2] + prices[2:-1] )
+gamma_bs = ( bs_closing_prices[0:-3] - 2 * bs_closing_prices[1:-2] + bs_closing_prices[2:-1] )
+plt.plot(x_values[1:-2], gamma, 'r')
+plt.plot(x_values[1:-2], gamma_bs, 'b--')
+plt.title('pde vs bs gamma')
+plt.show()

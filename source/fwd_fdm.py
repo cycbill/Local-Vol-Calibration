@@ -49,7 +49,9 @@ class FDMCrankNicolsonNeumann():
         self.Matrix_L[0, 0] = 1
         self.Matrix_L[-1, -1] = 1
 
-        plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.2, 0.9, 0.5), linestyle='--')
+        #plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.2, 0.9, 0.5), linestyle='--')
+        K = self.calibbasket.fwd * np.exp(self.x_values)
+        plt.plot(K, self.old_result * self.calibbasket.spot, color=(self.cur_t * 0.2, 0.9, 0.5), linestyle='--')
 
 
     def calculate_inner_domain(self):
@@ -69,7 +71,9 @@ class FDMCrankNicolsonNeumann():
             if n != 0:
                 #print(n)
                 #print(self.old_result)
-                plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5))
+                #plt.plot(self.x_values, self.old_result, color=(self.cur_t * 0.9, 0.2, 0.5))
+                K = self.calibbasket.fwd * np.exp(self.x_values)
+                plt.plot(K, self.old_result * self.calibbasket.spot, color=(self.cur_t * 0.9, 0.2, 0.5))
             self.prev_t = self.cur_t
         return self.old_result, self.x_values
 
