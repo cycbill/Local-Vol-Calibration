@@ -38,8 +38,15 @@ def black_scholes_vanilla_dual_gamma(S, K, T, rd, rf, sigma):
     return result
 
 def black_scholes_vanilla_solve_vol(S, K, T, rd, rf, vol_guess, price):
-    result = np.zeros_like(price)
-    for i, _ in enumerate(price):
-        solve_func = lambda sigma: black_scholes_vanilla(S, K[i], T, rd, rf, sigma) - price[i]
-        result[i] = newton(solve_func, vol_guess)
+    len_price = len(price)
+    if len_price==1:
+        solve_func = lambda sigma: black_scholes_vanilla(S, K, T, rd, rf, sigma) - price
+        result = newton(solve_func, vol_guess)
+    else:
+        result = np.zeros_like(price)
+        for i in range(len_price):
+
+            solve_func = lambda sigma: black_scholes_vanilla(S, K[i], T, rd, rf, sigma) - price[i]
+            result[i] = newton(solve_func, vol_guess)
+            print('i =', i, K[i], price[i], result[i] )
     return result

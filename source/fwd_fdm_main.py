@@ -12,15 +12,21 @@ import xlwings as xw
 S = 0.6
 r = 0.25
 T = 1.00
-#loc_vol_inputs = np.repeat(0.25, 7)
-loc_vol_inputs = np.array([0.25, 0.20, 0.15, 0.10, 0.15, 0.20, 0.25])
-K_inputs = np.array([0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9])
 F = S * np.exp(r*T)
 
-k_inputs = np.log(K_inputs / F)
+## K inputs
+#loc_vol_inputs = np.array([0.25, 0.20, 0.15, 0.10, 0.15, 0.20, 0.25])
+#K_inputs = np.array([0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9])
+#k_inputs = np.log(K_inputs / F)
 
-x_min = -4.0
-x_max = 1.0
+## k inputs
+imp_vol_atm = 0.25
+loc_vol_inputs = np.array([0.25, 0.25])
+k_inputs = np.array([-3*imp_vol_atm*np.sqrt(T), 2*imp_vol_atm*np.sqrt(T)])
+K_inputs = F * np.exp(k_inputs)
+
+x_min = k_inputs[0]
+x_max = k_inputs[-1]
 J = 200
 t_min = 0
 t_max = T
