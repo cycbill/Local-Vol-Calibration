@@ -45,8 +45,9 @@ def black_scholes_vanilla_solve_vol(S, K, T, rd, rf, vol_guess, price):
     else:
         result = np.zeros_like(price)
         for i in range(len_price):
-
+            if i==200:
+                print('i =',i, S, K[i], T, rd, rf, vol_guess[i], price[i])
             solve_func = lambda sigma: black_scholes_vanilla(S, K[i], T, rd, rf, sigma) - price[i]
-            result[i] = newton(solve_func, vol_guess)
+            result[i] = newton(solve_func, vol_guess[i])
             print('i =', i, K[i], price[i], result[i] )
     return result

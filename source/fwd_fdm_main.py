@@ -21,8 +21,8 @@ F = S * np.exp(r*T)
 
 ## k inputs
 imp_vol_atm = 0.25
-loc_vol_inputs = np.array([0.25, 0.25])
-k_inputs = np.array([-3*imp_vol_atm*np.sqrt(T), 2*imp_vol_atm*np.sqrt(T)])
+loc_vol_inputs = np.array([0.25, 0.20])
+k_inputs = np.array([-3*imp_vol_atm*np.sqrt(T), 3*imp_vol_atm*np.sqrt(T)])
 K_inputs = F * np.exp(k_inputs)
 
 x_min = k_inputs[0]
@@ -48,21 +48,24 @@ premium_bs = black_scholes_vanilla(S, K_outputs, T, r, 0, 0.25)
 
 dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(S, K_outputs, T, r, 0, 0.25)
 dual_gamma_bs_analytic = black_scholes_vanilla_dual_gamma(S, K_outputs, T, r, 0, 0.25)
-implied_vol = black_scholes_vanilla_solve_vol(S, K_outputs, T, r, 0, 0.2, premium_outputs)
-
+implied_vol_guess = loc_vol_para.interpolate(x_values)
+implied_vol = black_scholes_vanilla_solve_vol(S, K_outputs, T, r, 0, implied_vol_guess, premium_outputs)
+plt.plot(K_outputs[50:150], implied_vol)
+plt.title('Implied Vol vs Strike')
+plt.show()
 
 ## Output pde results
 wb = xw.Book('LocVol Parameters.xlsx')
 sht = wb.sheets['FDM_Output']
 
-sht.range('D4').options(transpose=True).value = x_values
-sht.range('E4').options(transpose=True).value = K_outputs
-sht.range('F4').options(transpose=True).value = prices
-sht.range('G4').options(transpose=True).value = payoff_outputs
-sht.range('H4').options(transpose=True).value = premium_outputs
-sht.range('I4').options(transpose=True).value = premium_bs
-sht.range('M4').options(transpose=True).value = dual_delta_bs_analytic
-sht.range('Q4').options(transpose=True).value = dual_gamma_bs_analytic
+sht.range('E4').options(transpose=True).value = x_values
+sht.range('F4').options(transpose=True).value = K_outputs
+sht.range('G4').options(transpose=True).value = prices
+sht.range('H4').options(transpose=True).value = payoff_outputs
+sht.range('I4').options(transpose=True).value = premium_outputs
+sht.range('J4').options(transpose=True).value = premium_bs
+sht.range('O4').options(transpose=True).value = dual_delta_bs_analytic
+sht.range('V4').options(transpose=True).value = dual_gamma_bs_analytic
 
 sht.range('B3').value = S
 sht.range('B4').value = r
