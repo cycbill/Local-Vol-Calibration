@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.stats import norm
-from scipy.optimize import newton
+from scipy.optimize import newton, bisect, brent
 
 
 def black_scholes_vanilla(S, K, T, rd, rf, sigma):
@@ -40,14 +40,17 @@ def black_scholes_vanilla_dual_gamma(S, K, T, rd, rf, sigma):
 def black_scholes_vanilla_solve_vol(S, K, T, rd, rf, vol_guess, price):
     len_price = len(price)
     if len_price==1:
-        solve_func = lambda sigma: black_scholes_vanilla(S, K, T, rd, rf, sigma) - price
-        result = newton(solve_func, vol_guess)
+        solve_func = lambda sigma: ( black_scholes_vanilla(S, K, T, rd, rf, sigma) - price ) / price
+        #result = newton(solve_func, vol_guess)
+        result = bisect(solve_func, vol_guess*0.2, vol_guess*2.0 )
     else:
         result = np.zeros_like(price)
         for i in range(len_price):
-            if i==200:
+            if i==118:
                 print('i =',i, S, K[i], T, rd, rf, vol_guess[i], price[i])
-            solve_func = lambda sigma: black_scholes_vanilla(S, K[i], T, rd, rf, sigma) - price[i]
-            result[i] = newton(solve_func, vol_guess[i])
-            print('i =', i, K[i], price[i], result[i] )
+            solve_func = lambda sigma: ( black_scholes_vanilla(S, K[i], T, rd, rf, sigma) - price[i] ) / price[i]
+            #result[i] = newton(solve_func, vol_guess[i])
+            result[i] = bisect(solve_func, vol_guess[i]*0.2, vol_guess[i]*2.0 )
+            #if i > 180:
+            #    print('i =', i, ' K=',K[i], ' price=',price[i], ' vol=',result[i] )
     return result

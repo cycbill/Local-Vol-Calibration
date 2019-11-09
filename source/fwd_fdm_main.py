@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+#from matplotlib.axes.Axes import axhline
 from parameters import PiecewiseLinearParameter1D
 from payoff import PayOffCall, PayOffPut
 from option2 import CalibrationBasketVanillaOption
@@ -11,7 +12,7 @@ import xlwings as xw
 
 S = 0.6
 r = 0.25
-T = 1.00
+T = 1
 F = S * np.exp(r*T)
 
 ## K inputs
@@ -21,8 +22,8 @@ F = S * np.exp(r*T)
 
 ## k inputs
 imp_vol_atm = 0.25
-loc_vol_inputs = np.array([0.25, 0.20])
-k_inputs = np.array([-3*imp_vol_atm*np.sqrt(T), 3*imp_vol_atm*np.sqrt(T)])
+loc_vol_inputs = np.array([0.25, 0.25])
+k_inputs = np.array([-5*imp_vol_atm*np.sqrt(T), 3*imp_vol_atm*np.sqrt(T)])
 K_inputs = F * np.exp(k_inputs)
 
 x_min = k_inputs[0]
@@ -30,7 +31,7 @@ x_max = k_inputs[-1]
 J = 200
 t_min = 0
 t_max = T
-N = 200
+N = 2000
 
 loc_vol_para = PiecewiseLinearParameter1D(k_inputs, loc_vol_inputs)
 calib_basket = CalibrationBasketVanillaOption(S, r, T, loc_vol_para)
@@ -44,15 +45,26 @@ plt.show()
 K_outputs = F * np.exp(x_values)
 payoff_outputs = calib_basket.payoff_by_logmoney(x_values) * S
 premium_outputs = prices * F * np.exp(-r*T)
-premium_bs = black_scholes_vanilla(S, K_outputs, T, r, 0, 0.25)
-
-dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(S, K_outputs, T, r, 0, 0.25)
-dual_gamma_bs_analytic = black_scholes_vanilla_dual_gamma(S, K_outputs, T, r, 0, 0.25)
+premium_bs_vatm = black_scholes_vanilla(S, K_outputs, T, r, 0, imp_vol_atm)
+dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(S, K_outputs, T, r, 0, imp_vol_atm)
+dual_gamma_bs_analytic = black_scholes_vanilla_dual_gamma(S, K_outputs, T, r, 0, imp_vol_atm)
 implied_vol_guess = loc_vol_para.interpolate(x_values)
-implied_vol = black_scholes_vanilla_solve_vol(S, K_outputs, T, r, 0, implied_vol_guess, premium_outputs)
-plt.plot(K_outputs[50:150], implied_vol)
-plt.title('Implied Vol vs Strike')
+
+### TEST
+K_test = K_outputs[119]
+price_test = premium_outputs[119]
+vol_test = np.linspace(0.2475, 0.2525, num=100, endpoint=True)
+price_diff_test = black_scholes_vanilla(S, K_test, T, r, 0, vol_test) / price_test -1
+print('K=',K_test, ' price=',price_test)
+plt.plot(vol_test, price_diff_test)
+plt.hlines(0, 0.2475, 0.2525)
+plt.title('price vs vol')
 plt.show()
+### TEST END
+
+implied_vol = black_scholes_vanilla_solve_vol(S, K_outputs[1:-1], T, r, 0, implied_vol_guess[1:-1], premium_outputs[1:-1])
+premium_bs_implied_vol = black_scholes_vanilla(S, K_outputs[1:-1], T, r, 0, implied_vol)
+
 
 ## Output pde results
 wb = xw.Book('LocVol Parameters.xlsx')
@@ -63,9 +75,13 @@ sht.range('F4').options(transpose=True).value = K_outputs
 sht.range('G4').options(transpose=True).value = prices
 sht.range('H4').options(transpose=True).value = payoff_outputs
 sht.range('I4').options(transpose=True).value = premium_outputs
-sht.range('J4').options(transpose=True).value = premium_bs
-sht.range('O4').options(transpose=True).value = dual_delta_bs_analytic
-sht.range('V4').options(transpose=True).value = dual_gamma_bs_analytic
+sht.range('J5').options(transpose=True).value = implied_vol
+sht.range('K5').options(transpose=True).value = premium_bs_implied_vol
+sht.range('L4').options(transpose=True).value = premium_bs_vatm
+sht.range('Q4').options(transpose=True).value = dual_delta_bs_analytic
+sht.range('X4').options(transpose=True).value = dual_gamma_bs_analytic
+
+
 
 sht.range('B3').value = S
 sht.range('B4').value = r
