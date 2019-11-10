@@ -7,7 +7,9 @@ class ConstantParameter1D():
         self.constant = _constant
 
     def interpolate(self, x):
-        return self.constant
+        x_size = len(x)
+        result = np.repeat(self.constant, x_size)
+        return result
 
     def integral(self, x0, x1):
         return self.constant * (x1 - x0)

@@ -1,14 +1,14 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-#from matplotlib.axes.Axes import axhline
+import xlwings as xw
+
 from parameters import PiecewiseLinearParameter1D
-from payoff import PayOffCall, PayOffPut
-from option2 import CalibrationBasketVanillaOption
+from tenor_market_data import TenorMarketData
 from initial_condition import InitialConditionFirstTenor
 from fwd_fdm import FDMCrankNicolsonNeumann
 from black_scholes_formulas import *
-import xlwings as xw
+
 
 S = 0.6
 r = 0.25
@@ -22,7 +22,7 @@ F = S * np.exp(r*T)
 
 ## k inputs
 imp_vol_atm = 0.25
-loc_vol_inputs = np.array([0.25, 0.25])
+loc_vol_inputs = np.array([0.25, 0.15])
 k_inputs = np.array([-5*imp_vol_atm*np.sqrt(T), 3*imp_vol_atm*np.sqrt(T)])
 K_inputs = F * np.exp(k_inputs)
 
@@ -34,16 +34,16 @@ t_max = T
 N = 2000
 
 loc_vol_para = PiecewiseLinearParameter1D(k_inputs, loc_vol_inputs)
-calib_basket = CalibrationBasketVanillaOption(S, r, T, loc_vol_para)
+tenor_mkt_data = TenorMarketData(S, r, T)
 init_cond = InitialConditionFirstTenor()
-fdm_cn = FDMCrankNicolsonNeumann(x_min, x_max, J, t_min, t_max, N, calib_basket, init_cond)
+fdm_cn = FDMCrankNicolsonNeumann(x_min, x_max, J, t_min, t_max, N, tenor_mkt_data, loc_vol_para, init_cond)
 
 prices, x_values = fdm_cn.step_march()
 plt.show()
 
 
 K_outputs = F * np.exp(x_values)
-payoff_outputs = calib_basket.payoff_by_logmoney(x_values) * S
+payoff_outputs = init_cond.compute(x_values) * S
 premium_outputs = prices * F * np.exp(-r*T)
 premium_bs_vatm = black_scholes_vanilla(S, K_outputs, T, r, 0, imp_vol_atm)
 dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(S, K_outputs, T, r, 0, imp_vol_atm)
