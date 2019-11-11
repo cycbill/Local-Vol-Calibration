@@ -14,12 +14,14 @@
 import numpy as np 
 from scipy.optimize import minimize, LinearConstraint
 from scipy.stats import norm
+import matplotlib.pyplot as plt
 
 from tenor_market_data import TenorMarketData
 from parameters import *
+from local_vol_class import LocalVolatility
 from initial_condition import *
 from fwd_fdm import FDMCrankNicolsonNeumann
-from black_scholes_formulas import black_scholes_vanilla
+from black_scholes_formulas import *
 
 
 class LocalVolCalibration():
@@ -38,6 +40,9 @@ class LocalVolCalibration():
         self.nb_quotes = len(self.imp_vol_para.x_inputs)
         self.prices_5quotes_bs = self.blk_sch_fwd_pde()
         self.solve_iter_count = 0
+        self.match_cost = 0
+        self.panel_cost = 0
+        self.total_cost = 0
 
 
     def loc_vol_fwd_pde(self):
@@ -77,13 +82,25 @@ class LocalVolCalibration():
 
 
     def cost_func(self, loc_vol_data):
-        # we can extend the loc vol data to 7 points later
-        self.loc_vol_para = PiecewiseLinearParameter1D(self.imp_vol_para.x_inputs, loc_vol_data)
+        mid = int((len(self.imp_vol_para.value_inputs) - 1) / 2)
+        imp_vol_atm = self.imp_vol_para.value_inputs[mid]
+
+        self.loc_vol_para = LocalVolatility(self.imp_vol_para.x_inputs, loc_vol_data, imp_vol_atm, self.tenor_mkt_data.T)
+
         self.prices_5quotes_lv, self.price_grid_lv, self.k_grid = self.loc_vol_fwd_pde()
-        cost = np.sum( (self.prices_5quotes_lv - self.prices_5quotes_bs)**2 ) + self.panel_func()
+        self.match_cost = np.sum( (self.prices_5quotes_lv - self.prices_5quotes_bs)**2  ) 
+        self.panel_cost = self.panel_func()
+        self.total_cost = self.match_cost + self.panel_cost
+
         self.solve_iter_count += 1
-        print('Iter ', self.solve_iter_count, ' : ', loc_vol_data, cost)
-        return cost
+
+        print('Iter:       ', self.solve_iter_count)
+        print('Loc vol:    ', self.loc_vol_para.value_extend)
+        print('LV prices:  ', self.prices_5quotes_lv)
+        print('BS prices:  ', self.prices_5quotes_bs)
+        print('Match cost: ', self.match_cost, ' Panel cost: ', self.panel_cost, ' Total cost: ', self.total_cost)
+        print('\n')
+        return self.total_cost
 
 
     def calibration(self, loc_vol_guess):
@@ -94,21 +111,34 @@ class LocalVolCalibration():
 
 
 if __name__ == '__main__':
+    np.set_printoptions(linewidth=150)
     S = 0.6
-    r = 0.25
+    r = 0.05
     T = 1
 
-    ## K & Vatm inputs
-    K_inputs = np.array([0.4, 0.5, 0.6, 0.7, 0.8])
-    #imp_vol_inputs = np.array([0.25, 0.22, 0.20, 0.19, 0.21])
-    imp_vol_inputs = np.array([0.2, 0.21, 0.22, 0.21, 0.2])
-    imp_vol_atm = imp_vol_inputs[2]
-    loc_vol_guess = imp_vol_inputs
-    #loc_vol_guess = np.array([0.25, 0.22, 0.20, 0.19, 0.21])
-
+    ## K inputs
+    #K_inputs = np.array([0.4, 0.5, 0.6, 0.7, 0.8])
     F = S * np.exp(r*T)
+    delta = np.array([0.90, 0.75, 0.50, 0.25, 0.10])
+
+
+    ## Imp Vol inputs
+    imp_vol_inputs = np.array([0.25, 0.22, 0.20, 0.19, 0.21])
+    #imp_vol_inputs = np.array([0.2, 0.22, 0.24, 0.26, 0.28])
+    imp_vol_atm = imp_vol_inputs[2]
+
+    ## Loc vol inputs
+    loc_vol_guess = imp_vol_inputs
+
+
+    K_guess = np.repeat(F, 5)
+    K_inputs = black_scholes_vanilla_solve_strike(S, K_guess, T, r, 0, imp_vol_inputs, delta, 'fwd')
+    print('K:          ', K_inputs)
     k_inputs = np.log(K_inputs / F)
-    x_min = min( k_inputs[0] * 0.9, -5*imp_vol_atm*np.sqrt(T) )
+    print('k:          ', k_inputs)
+
+    
+    x_min = min( k_inputs[0] * 1.1, -5*imp_vol_atm*np.sqrt(T) )
     x_max = max( k_inputs[-1] * 1.1, 5*imp_vol_atm*np.sqrt(T) )
     J = 200
     t_min = 0
@@ -116,11 +146,20 @@ if __name__ == '__main__':
     N = 200
 
     tenor_mkt_data = TenorMarketData(S, r, T)
-    imp_vol_para = CubicSplineParameter1D(K_inputs, imp_vol_inputs)
+    imp_vol_para = CubicSplineParameter1D(k_inputs, imp_vol_inputs)
     init_cond_lv = InitialConditionFirstTenor()     # testing purpose
     init_cond_bs = InitialConditionFirstTenor()     # testing purpose
 
     lv_calibrator = LocalVolCalibration(x_min, x_max, J, t_min, t_max, N, tenor_mkt_data, imp_vol_para, init_cond_lv, init_cond_bs)
     loc_vol_solved, prices_5quotes_lv, prices_5quotes_bs, price_grid_lv, k_grid = lv_calibrator.calibration(loc_vol_guess)
-    print(loc_vol_solved)
+    
+    
+    prices_lv = prices_5quotes_lv * F * np.exp(-r*T)
+    prices_bs = prices_5quotes_bs * F * np.exp(-r*T)
+    premium_bs = black_scholes_vanilla(S, K_inputs, T, r, 0, imp_vol_inputs)
+    print('LV pde price: ', prices_lv)
+    print('BS pde price: ', prices_bs)
+    print('BS cls price: ', premium_bs)
+    print('Local Vol:    ', loc_vol_solved)
 
+    
