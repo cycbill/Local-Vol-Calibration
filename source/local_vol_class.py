@@ -1,4 +1,5 @@
 #####################################
+# Build the local vol class
 # Compute the loc vol extreme quotes: k(0), k(M+1) and lv(0), lv(M+1)
 #####################################
 
