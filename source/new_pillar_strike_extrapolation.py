@@ -15,5 +15,8 @@ class NewPillarStrikeExtrapolation():
         self.imp_vol_para = _imp_vol_para
         self.strike = self.imp_vol_para.K_inputs
         self.moneyness = self.strike / self.tenor_mkt_data.fwd
-        self.norm_call_price = black_scholes_vanilla(self.tenor_mkt_data.spot, self.strike, self.tenor_mkt_data.T, 
+        self.norm_call_price = 
+        
+    def compute_norm_call(self):
+        result = black_scholes_vanilla(1, self.tenor_mkt_data.spot, self.strike, self.tenor_mkt_data.T, 
                                                      self.tenor_mkt_data.rd, 0, self.imp_vol_para.value_inputs)

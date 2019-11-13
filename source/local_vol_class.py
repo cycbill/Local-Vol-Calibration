@@ -54,13 +54,11 @@ if __name__ == '__main__':
     imp_vol_atm = 0.10
     T = 1
 
-    k, lv = compute_lv_extreme_quotes(k_quotes, loc_vol_quotes, imp_vol_atm, T)
-
     loc_vol_para = LocalVolatility(k_quotes, loc_vol_quotes, imp_vol_atm, T)
     
-    print(loc_vol_para.k_extend)
-    print(loc_vol_para.lv_extend)
-    plt.plot(k, lv, 'r.')
+    print(loc_vol_para.x_extend)
+    print(loc_vol_para.value_extend)
+    plt.plot(loc_vol_para.x_extend, loc_vol_para.value_extend, 'r.')
 
     k_grid = np.linspace(-1.0, 1.0, 201, endpoint=True)
     lv_grid = loc_vol_para.interpolate(k_grid)

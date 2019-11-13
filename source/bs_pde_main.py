@@ -7,6 +7,7 @@ from option import VanillaOption
 from payoff import PayOffCall, PayOffPut
 from black_scholes_formulas import black_scholes_vanilla
 
+callput = 1
 K = 0.5
 r = 0.25
 v = 0.2
@@ -28,7 +29,7 @@ plt.plot(x_values, prices)
 plt.show()
 
 
-bs_price_by_spot = lambda spot: black_scholes_vanilla(spot, K, T, r, 0, v)
+bs_price_by_spot = lambda spot: black_scholes_vanilla(callput, spot, K, T, r, 0, v)
 
 bs_closing_prices = bs_price_by_spot(x_values)
 plt.plot(x_values, bs_closing_prices, 'r')

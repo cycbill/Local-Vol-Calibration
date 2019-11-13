@@ -8,5 +8,5 @@ class TenorMarketData():
         self.T = _T
         self.fwd = self.spot * np.exp(self.r * self.T)
 
-    def black_scholes_price(self, K, vol):
-        return black_scholes_vanilla(self.spot, K, self.T, self.r, 0, vol)
+    def black_scholes_price(self, callput, K, vol):
+        return black_scholes_vanilla(callput, self.spot, K, self.T, self.r, 0, vol)

@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 
 from tenor_market_data import TenorMarketData
 from parameters import *
+from implied_vol_class import ImpliedVolatility
 from local_vol_class import LocalVolatility
 from initial_condition import *
 from fwd_fdm import FDMCrankNicolsonNeumann
@@ -74,7 +75,7 @@ class LocalVolCalibration():
         atm_vol = self.imp_vol_para.value_inputs[2]
         atm_K = self.tenor_mkt_data.fwd
         coeff_panel = 0.5 * (0.05 * atm_vol)**2 * self.tenor_mkt_data.T   # lambda in MX LV
-        atm_price = self.tenor_mkt_data.black_scholes_price(atm_K, atm_vol) / self.tenor_mkt_data.spot   # used to compute alpha in MX LV, refer this formula to c(T,k) later
+        atm_price = self.tenor_mkt_data.black_scholes_price(1, atm_K, atm_vol) / self.tenor_mkt_data.spot   # used to compute alpha in MX LV, refer this formula to c(T,k) later
         alpha = (atm_price * np.sqrt(2 * np.pi)) / ((self.nb_quotes - 2) * np.sqrt(self.tenor_mkt_data.T))
         gamma_func = convave_proxy * norm.cdf(convave_proxy / alpha) + alpha * norm.pdf(convave_proxy / alpha)
         result = coeff_panel * np.sum(gamma_func**2)
@@ -112,6 +113,7 @@ class LocalVolCalibration():
 
 if __name__ == '__main__':
     np.set_printoptions(linewidth=150)
+    callput = 1
     S = 0.6
     r = 0.05
     T = 1
@@ -132,7 +134,7 @@ if __name__ == '__main__':
 
 
     K_guess = np.repeat(F, 5)
-    K_inputs = black_scholes_vanilla_solve_strike(S, K_guess, T, r, 0, imp_vol_inputs, delta, 'fwd')
+    K_inputs = black_scholes_vanilla_solve_strike(callput, S, K_guess, T, r, 0, imp_vol_inputs, delta, 'fwd')
     print('K:          ', K_inputs)
     k_inputs = np.log(K_inputs / F)
     print('k:          ', k_inputs)
@@ -146,7 +148,7 @@ if __name__ == '__main__':
     N = 200
 
     tenor_mkt_data = TenorMarketData(S, r, T)
-    imp_vol_para = CubicSplineParameter1D(k_inputs, imp_vol_inputs)
+    imp_vol_para = ImpliedVolatility(K_inputs, k_inputs, imp_vol_inputs)
     init_cond_lv = InitialConditionFirstTenor()     # testing purpose
     init_cond_bs = InitialConditionFirstTenor()     # testing purpose
 
@@ -156,7 +158,7 @@ if __name__ == '__main__':
     
     prices_lv = prices_5quotes_lv * F * np.exp(-r*T)
     prices_bs = prices_5quotes_bs * F * np.exp(-r*T)
-    premium_bs = black_scholes_vanilla(S, K_inputs, T, r, 0, imp_vol_inputs)
+    premium_bs = black_scholes_vanilla(callput, S, K_inputs, T, r, 0, imp_vol_inputs)
     print('LV pde price: ', prices_lv)
     print('BS pde price: ', prices_bs)
     print('BS cls price: ', premium_bs)

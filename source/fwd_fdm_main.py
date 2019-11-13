@@ -10,6 +10,7 @@ from fwd_fdm import FDMCrankNicolsonNeumann
 from black_scholes_formulas import *
 
 
+callput = 1
 S = 0.6
 r = 0.05
 T = 1
@@ -45,7 +46,7 @@ plt.show()
 K_outputs = F * np.exp(x_values)
 payoff_outputs = init_cond.compute(x_values) * S
 premium_outputs = prices * F * np.exp(-r*T)
-premium_bs_vatm = black_scholes_vanilla(S, K_outputs, T, r, 0, imp_vol_atm)
+premium_bs_vatm = black_scholes_vanilla(callput, S, K_outputs, T, r, 0, imp_vol_atm)
 '''
 pde_price_interpolator = PiecewiseLinearParameter1D(K_outputs, premium_outputs)
 pde_price = pde_price_interpolator.interpolate(0.83889174)
@@ -55,13 +56,13 @@ bs_price = black_scholes_vanilla(S, 0.83889174, T, r, 0, imp_vol_atm)
 print(pde_price, bs_price, pde_price-bs_price)
 
 '''
-dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(S, K_outputs, T, r, 0, imp_vol_atm)
+dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(callput, S, K_outputs, T, r, 0, imp_vol_atm)
 dual_gamma_bs_analytic = black_scholes_vanilla_dual_gamma(S, K_outputs, T, r, 0, imp_vol_atm)
 implied_vol_guess = loc_vol_para.interpolate(x_values)
 
 
-implied_vol = black_scholes_vanilla_solve_vol(S, K_outputs[1:-1], T, r, 0, implied_vol_guess[1:-1], premium_outputs[1:-1])
-premium_bs_implied_vol = black_scholes_vanilla(S, K_outputs[1:-1], T, r, 0, implied_vol)
+implied_vol = black_scholes_vanilla_solve_vol(callput, S, K_outputs[1:-1], T, r, 0, implied_vol_guess[1:-1], premium_outputs[1:-1])
+premium_bs_implied_vol = black_scholes_vanilla(callput, S, K_outputs[1:-1], T, r, 0, implied_vol)
 
 
 ## Output pde results
