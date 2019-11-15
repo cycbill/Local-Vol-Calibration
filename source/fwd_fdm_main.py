@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import xlwings as xw
 
 from parameters import PiecewiseLinearParameter1D
+from rate_curve_class import RateCurve
 from tenor_market_data import TenorMarketData
 from initial_condition import InitialConditionFirstTenor
 from fwd_fdm import FDMCrankNicolsonNeumann
@@ -13,7 +14,13 @@ from black_scholes_formulas import *
 callput = 1
 S = 0.6
 r = 0.05
+rf = 0.00
 T = 1
+
+r_para = RateCurve(r) ################################################## need to change ##############################################
+tenor_mkt_data = TenorMarketData(S, r, rf, T)
+
+
 F = S * np.exp(r*T)
 
 ## K inputs
@@ -35,7 +42,7 @@ t_max = T
 N = 2000
 
 loc_vol_para = PiecewiseLinearParameter1D(k_inputs, loc_vol_inputs)
-tenor_mkt_data = TenorMarketData(S, r, T)
+
 init_cond = InitialConditionFirstTenor()
 fdm_cn = FDMCrankNicolsonNeumann(x_min, x_max, J, t_min, t_max, N, tenor_mkt_data, loc_vol_para, init_cond)
 
