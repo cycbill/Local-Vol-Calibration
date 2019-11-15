@@ -10,29 +10,27 @@ from initial_condition import InitialConditionFirstTenor
 from fwd_fdm import FDMCrankNicolsonNeumann
 from black_scholes_formulas import *
 
-
+## Trade and single data
 callput = 1
 S = 0.6
-r = 0.05
-rf = 0.00
 T = 1
 
-r_para = RateCurve(r) ################################################## need to change ##############################################
-tenor_mkt_data = TenorMarketData(S, r, rf, T)
+## Curve Construction
+r_inputs = np.array([0.05, 0.05])
+rf_inputs = np.array([0.0, 0.0])
+T_inputs = np.array([0.01, 10.0])
+r_para = RateCurve(T_inputs, r_inputs)
+rf_para = RateCurve(T_inputs, rf_inputs)
 
+## Tenor Market Data
+tenor_mkt_data = TenorMarketData(S, r_para, rf_para, T)
 
-F = S * np.exp(r*T)
-
-## K inputs
-#loc_vol_inputs = np.array([0.25, 0.20, 0.15, 0.10, 0.15, 0.20, 0.25])
-#K_inputs = np.array([0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.9])
-#k_inputs = np.log(K_inputs / F)
 
 ## k inputs
-imp_vol_atm = 0.21
-loc_vol_inputs = np.array([0.21, 0.21])
+imp_vol_atm = 0.2
+loc_vol_inputs = np.array([0.2, 0.2])
 k_inputs = np.array([-5*imp_vol_atm*np.sqrt(T), 5*imp_vol_atm*np.sqrt(T)])
-K_inputs = F * np.exp(k_inputs)
+K_inputs = tenor_mkt_data.fwd * np.exp(k_inputs)
 
 x_min = k_inputs[0]
 x_max = k_inputs[-1]
@@ -50,26 +48,19 @@ prices, x_values = fdm_cn.step_march()
 plt.show()
 
 
-K_outputs = F * np.exp(x_values)
+K_outputs = tenor_mkt_data.fwd * np.exp(x_values)
 payoff_outputs = init_cond.compute(x_values) * S
-premium_outputs = prices * F * np.exp(-r*T)
-premium_bs_vatm = black_scholes_vanilla(callput, S, K_outputs, T, r, 0, imp_vol_atm)
-'''
-pde_price_interpolator = PiecewiseLinearParameter1D(K_outputs, premium_outputs)
-pde_price = pde_price_interpolator.interpolate(0.83889174)
+premium_outputs = prices * tenor_mkt_data.fwd * tenor_mkt_data.DF_r
+premium_bs_vatm = black_scholes_vanilla(callput, S, K_outputs, T, tenor_mkt_data.r, tenor_mkt_data.rf, imp_vol_atm)
 
-bs_price = black_scholes_vanilla(S, 0.83889174, T, r, 0, imp_vol_atm)
 
-print(pde_price, bs_price, pde_price-bs_price)
-
-'''
-dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(callput, S, K_outputs, T, r, 0, imp_vol_atm)
-dual_gamma_bs_analytic = black_scholes_vanilla_dual_gamma(S, K_outputs, T, r, 0, imp_vol_atm)
+dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(callput, S, K_outputs, T, tenor_mkt_data.r, tenor_mkt_data.rf, imp_vol_atm)
+dual_gamma_bs_analytic = black_scholes_vanilla_dual_gamma(S, K_outputs, T, tenor_mkt_data.r, tenor_mkt_data.rf, imp_vol_atm)
 implied_vol_guess = loc_vol_para.interpolate(x_values)
 
 
-implied_vol = black_scholes_vanilla_solve_vol(callput, S, K_outputs[1:-1], T, r, 0, implied_vol_guess[1:-1], premium_outputs[1:-1])
-premium_bs_implied_vol = black_scholes_vanilla(callput, S, K_outputs[1:-1], T, r, 0, implied_vol)
+implied_vol = black_scholes_vanilla_solve_vol(callput, S, K_outputs[1:-1], T, tenor_mkt_data.r, tenor_mkt_data.rf, implied_vol_guess[1:-1], premium_outputs[1:-1])
+premium_bs_implied_vol = black_scholes_vanilla(callput, S, K_outputs[1:-1], T, tenor_mkt_data.r, tenor_mkt_data.rf, implied_vol)
 
 
 ## Output pde results
@@ -90,7 +81,7 @@ sht.range('X4').options(transpose=True).value = dual_gamma_bs_analytic
 
 
 sht.range('B3').value = S
-sht.range('B4').value = r
+sht.range('B4').value = tenor_mkt_data.r
 sht.range('B5').value = T
 sht.range('B6').value = 0.25
 

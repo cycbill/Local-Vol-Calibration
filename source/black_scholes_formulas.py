@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.stats import norm
 from scipy.optimize import newton, bisect, brent
+import matplotlib.pyplot as plt
 
 
 def black_scholes_vanilla(callput, S, K, T, rd, rf, vol):
@@ -52,6 +53,13 @@ def black_scholes_vanilla_solve_vol(callput, S, K, T, rd, rf, vol_guess, price):
         result = np.zeros_like(price)
         for i in range(m):
             solve_func = lambda vol: ( black_scholes_vanilla(callput, S, K[i], T, rd, rf, vol) - price[i] ) / price[i]
+            #### TEST
+            #test_vol = np.linspace(0.00001, 1.0, num=50)
+            #test_func = solve_func(test_vol)
+            #plt.plot(test_vol, test_func)
+            #plt.show()
+            ####
+            #print(i, solve_func(vol_guess[i]*0.2), solve_func(vol_guess[i]*2.0))
             result[i] = bisect(solve_func, vol_guess[i]*0.2, vol_guess[i]*2.0 )
     return result
 
