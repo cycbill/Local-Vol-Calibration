@@ -16,19 +16,18 @@ S = 0.6
 T = 1
 
 ## Curve Construction
+T_inputs = np.array([0.01, 10.0])
 r_inputs = np.array([0.05, 0.05])
 rf_inputs = np.array([0.0, 0.0])
-T_inputs = np.array([0.01, 10.0])
 r_para = RateCurve(T_inputs, r_inputs)
 rf_para = RateCurve(T_inputs, rf_inputs)
 
 ## Tenor Market Data
 tenor_mkt_data = TenorMarketData(S, r_para, rf_para, T)
 
-
 ## k inputs
 imp_vol_atm = 0.2
-loc_vol_inputs = np.array([0.2, 0.2])
+loc_vol_inputs = np.array([0.25, 0.15])
 k_inputs = np.array([-5*imp_vol_atm*np.sqrt(T), 5*imp_vol_atm*np.sqrt(T)])
 K_inputs = tenor_mkt_data.fwd * np.exp(k_inputs)
 
@@ -79,9 +78,4 @@ sht.range('Q4').options(transpose=True).value = dual_delta_bs_analytic
 sht.range('X4').options(transpose=True).value = dual_gamma_bs_analytic
 
 
-
-sht.range('B3').value = S
-sht.range('B4').value = tenor_mkt_data.r
-sht.range('B5').value = T
-sht.range('B6').value = 0.25
 

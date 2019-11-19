@@ -16,6 +16,7 @@ from scipy.optimize import minimize, LinearConstraint
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 
+from rate_curve_class import RateCurve
 from tenor_market_data import TenorMarketData
 from parameters import *
 from implied_vol_class import ImpliedVolatility
@@ -115,28 +116,29 @@ if __name__ == '__main__':
     np.set_printoptions(linewidth=150)
     callput = 1
     S = 0.6
-    r = 0.05
     T = 1
 
-    ## K inputs
-    #K_inputs = np.array([0.4, 0.5, 0.6, 0.7, 0.8])
-    F = S * np.exp(r*T)
-    delta = np.array([0.90, 0.75, 0.50, 0.25, 0.10])
+    T_inputs = np.array([0.01, 10.0])
+    r_inputs = np.array([0.05, 0.05])
+    rf_inputs = np.array([0.0, 0.0])
+    r_para = RateCurve(T_inputs, r_inputs)
+    rf_para = RateCurve(T_inputs, rf_inputs)
+    tenor_mkt_data = TenorMarketData(S, r_para, rf_para, T)
 
+    delta = np.array([0.90, 0.75, 0.50, 0.25, 0.10])
 
     ## Imp Vol inputs
     imp_vol_inputs = np.array([0.25, 0.22, 0.20, 0.19, 0.21])
-    #imp_vol_inputs = np.array([0.2, 0.22, 0.24, 0.26, 0.28])
     imp_vol_atm = imp_vol_inputs[2]
 
     ## Loc vol inputs
     loc_vol_guess = imp_vol_inputs
 
 
-    K_guess = np.repeat(F, 5)
-    K_inputs = black_scholes_vanilla_solve_strike(callput, S, K_guess, T, r, 0, imp_vol_inputs, delta, 'fwd')
+    K_guess = np.repeat(tenor_mkt_data.fwd, 5)
+    K_inputs = black_scholes_vanilla_solve_strike(callput, S, K_guess, T, tenor_mkt_data.r, tenor_mkt_data.rf, imp_vol_inputs, delta, 'fwd')
     print('K:          ', K_inputs)
-    k_inputs = np.log(K_inputs / F)
+    k_inputs = np.log(K_inputs / tenor_mkt_data.fwd)
     print('k:          ', k_inputs)
 
     
@@ -147,7 +149,7 @@ if __name__ == '__main__':
     t_max = T
     N = 200
 
-    tenor_mkt_data = TenorMarketData(S, r, T)
+
     imp_vol_para = ImpliedVolatility(K_inputs, k_inputs, imp_vol_inputs)
     init_cond_lv = InitialConditionFirstTenor()     # testing purpose
     init_cond_bs = InitialConditionFirstTenor()     # testing purpose
@@ -156,9 +158,9 @@ if __name__ == '__main__':
     loc_vol_solved, prices_5quotes_lv, prices_5quotes_bs, price_grid_lv, k_grid = lv_calibrator.calibration(loc_vol_guess)
     
     
-    prices_lv = prices_5quotes_lv * F * np.exp(-r*T)
-    prices_bs = prices_5quotes_bs * F * np.exp(-r*T)
-    premium_bs = black_scholes_vanilla(callput, S, K_inputs, T, r, 0, imp_vol_inputs)
+    prices_lv = prices_5quotes_lv * tenor_mkt_data.fwd * np.exp(-tenor_mkt_data.r*T)
+    prices_bs = prices_5quotes_bs * tenor_mkt_data.fwd * np.exp(-tenor_mkt_data.r*T)
+    premium_bs = black_scholes_vanilla(callput, S, K_inputs, T, tenor_mkt_data.r, tenor_mkt_data.rf, imp_vol_inputs)
     print('LV pde price: ', prices_lv)
     print('BS pde price: ', prices_bs)
     print('BS cls price: ', premium_bs)
