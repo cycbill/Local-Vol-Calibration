@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 from parameters import PiecewiseLinearParameter1D
 
 class LocalVolatilityInitGuess():
-    def __init__(self, _k_quotes, _loc_vol_quotes, _imp_vol_atm, _T):
+    def __init__(self, _k_quotes, _imp_vol_quotes, _imp_vol_atm, _T):
         self.x_inputs = _k_quotes
-        self.value_inputs = _loc_vol_quotes
+        self.value_inputs = _imp_vol_quotes
         self.imp_vol_atm = _imp_vol_atm
         self.T = _T
         self.m = len(self.x_inputs)
