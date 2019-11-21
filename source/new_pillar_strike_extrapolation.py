@@ -4,7 +4,8 @@
 
 import numpy as np 
 from scipy.stats import norm
-from scipy.optimize import newton
+from scipy.optimize import newton, brenth
+import matplotlib.pyplot as plt
 
 from tenor_market_data import TenorMarketData
 from implied_vol_class import ImpliedVolatility
@@ -12,6 +13,7 @@ from black_scholes_formulas import *
 
 class NewPillarStrikeExtrapolation():
     def __init__(self, _tenor_mkt_data, _imp_vol_para):
+        self.ALPHA = 2.1e-7
         self.tenor_mkt_data = _tenor_mkt_data
         self.imp_vol_para = _imp_vol_para
         self.strike = self.imp_vol_para.K_inputs
@@ -30,7 +32,7 @@ class NewPillarStrikeExtrapolation():
         self.slope[0] = -1
         self.slope[1:] = np.diff(self.norm_call_price) / np.diff(self.moneyness)
 
-        mid = self.M / 2
+        mid = int((self.M - 1) / 2)
         self.sigma_guess = self.imp_vol_para.value_inputs[mid] * np.sqrt(self.tenor_mkt_data.T)
 
         
@@ -49,7 +51,8 @@ class NewPillarStrikeExtrapolation():
         digital_price = - (self.slope[1] + self.slope[2]) / 2
         self.d_minus_1 = norm.ppf(digital_price)
         eta_low = - (self.d_minus_1 + sigma) 
-        func_result = (eta_low)**2 / 2 + np.log(norm.cdf(eta_low)) - np.log((self.slope[2] - self.slope[1]) / 2) - (d_minus)**2 / 2
+        func_result = (eta_low)**2 / 2 + np.log(norm.cdf(eta_low)) \
+                        - np.log((self.slope[2] - self.slope[1]) / 2) - (self.d_minus_1)**2 / 2
         return func_result
 
     def otm_put_extrapolation(self):
@@ -68,6 +71,16 @@ class NewPillarStrikeExtrapolation():
         return func_result
 
     def otm_call_extrapolation(self):
+        ############ TEST
+        xmin = 0.001
+        xmax = 0.999
+        print(self.call_quantile_slope_func(xmin), self.call_quantile_slope_func(xmax))
+        moneyness_test = np.linspace(xmin, xmax, 50)
+        func_test = self.call_quantile_slope_func(moneyness_test)
+        plt.plot(moneyness_test, func_test, '.-')
+        #plt.hlines(0,xmin,xmax)
+        plt.show()
+        ############ TEST END
         sigma_solved = newton(self.call_quantile_slope_func, self.sigma_guess)
 
         f = self.moneyness[-1] * np.exp(sigma_solved * (self.d_minus_M + sigma_solved / 2))
@@ -76,11 +89,11 @@ class NewPillarStrikeExtrapolation():
 
     def compute_extreme_strikes(self):
         f_otmput, sigma_otmput = self.otm_put_extrapolation()
-        dig_extrplt_func1 = lambda moneyness: self.digital_extrapolation(moneyness, f_otmput, sigma_otmput)
+        dig_extrplt_func1 = lambda moneyness: self.digital_extrapolation(moneyness, f_otmput, sigma_otmput) - (1 - self.ALPHA)
         moneyness_min = newton(dig_extrplt_func1, self.moneyness[1])
         k_min = np.log(moneyness_min)
 
-        f_otmcall, sigma_otmcall = self.otm_call_extrapolation()
+        f_otmcall, sigma_otmcall = self.otm_call_extrapolation() - self.ALPHA
         dig_extrplt_func2 = lambda moneyness: self.digital_extrapolation(moneyness, f_otmcall, sigma_otmcall)
         moneyness_max = newton(dig_extrplt_func2, self.moneyness[-1])
         k_max = np.log(moneyness_max)
