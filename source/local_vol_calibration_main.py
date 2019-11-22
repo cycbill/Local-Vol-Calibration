@@ -54,7 +54,8 @@ sum_sqr_vol_T = compute_sum_sqr_vol_T(imp_vol_quotes, imp_vol_tenors)
 new_pillar_extrplt = NewPillarStrikeExtrapolation(tenor_mkt_data, imp_vol_para)
 k_min_extrplt, k_max_extrplt = new_pillar_extrplt.compute_extreme_strikes()
 
-k_min, k_max, dk, Nk = strike_grid_info.compute_extreme_strikes(i, k_min_extrplt, k_max_extrplt, imp_vol_para, tenor_mkt_data, sum_sqr_vol_T)
+k_min, k_max, dk, Nk = strike_grid_info.strike_grid_discretization(i, k_min_extrplt, k_max_extrplt, 
+                                                                    imp_vol_para, tenor_mkt_data, sum_sqr_vol_T[i])
 print('k_min: {}, k_max: {}'.format(k_min, k_max))
 
 ## Compute t_min, t_max, dT, NT
