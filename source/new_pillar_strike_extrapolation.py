@@ -83,6 +83,7 @@ class NewPillarStrikeExtrapolation():
 
     def otm_call_extrapolation(self):
         ############ TEST
+        '''
         xmin = 0.001
         xmax = 0.025
         print(self.otm_call_price_diff(xmin), self.otm_call_price_diff(xmax))
@@ -91,6 +92,7 @@ class NewPillarStrikeExtrapolation():
         plt.plot(sigma_test, func_test, '.-')
         plt.hlines(0,xmin,xmax)
         plt.show()
+        '''
         ############ TEST END
         sigma_solved = newton(self.otm_call_price_diff, self.sigma_guess)
         print(sigma_solved)

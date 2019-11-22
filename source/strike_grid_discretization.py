@@ -8,10 +8,12 @@ class StrikeGridsAllTenors():
         self.Nk = np.zeros(_nb_tenors)
 
     def strike_grid_discretization(self, tenor_i, k_min_extrplt, k_max_extrplt, imp_vol_para, tenor_mkt_data, sum_sqr_vol_T):
-        _k_min = max(k_min_extrplt, -5 * np.sqrt(sum_sqr_vol_T))
-        _k_max = min(k_max_extrplt,  5 * np.sqrt(sum_sqr_vol_T))
+        #_k_min = max(k_min_extrplt, -5 * np.sqrt(sum_sqr_vol_T))
+        #_k_max = min(k_max_extrplt,  5 * np.sqrt(sum_sqr_vol_T))
+        _k_min = k_min_extrplt
+        _k_max = k_max_extrplt
 
-        vol_max = max(imp_vol_para.values_input)
+        vol_max = max(imp_vol_para.value_inputs)
         _k_min = min(_k_min, imp_vol_para.x_inputs[0] - 0.75 * vol_max * np.sqrt(tenor_mkt_data.T))
         _k_max = max(_k_max, imp_vol_para.x_inputs[-1] + 0.75 * vol_max * np.sqrt(tenor_mkt_data.T))
         self.k_min[tenor_i] = _k_min
@@ -24,8 +26,8 @@ class StrikeGridsAllTenors():
             k_minus = -3 * vol_max * np.sqrt(tenor_mkt_data.T)
             k_plus  =  3 * vol_max * np.sqrt(tenor_mkt_data.T)
 
-        Nk_tmp = min( max( (k_plus - k_minus)/(2.10e-2), 51), 201)
-        self.dk[tenor_i] = (k_plus - k_minus) / (Nk_tmp - 1)
-        self.Nk[tenor_i] = min( max( (_k_max - _k_min)/self.dk, 51), 201)
-
+        Nk_tmp = min( max( int((k_plus - k_minus)/(2.10e-2)), 51), 201)
+        dk = (k_plus - k_minus) / (Nk_tmp - 1)
+        self.Nk[tenor_i] = min( max( int( (_k_max - _k_min)/dk ), 51), 201)
+        self.dk[tenor_i] = (_k_max - _k_min) / (self.Nk[tenor_i] - 1)
         return self.k_min[tenor_i], self.k_max[tenor_i], self.dk[tenor_i], self.Nk[tenor_i]
