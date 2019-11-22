@@ -62,15 +62,15 @@ print(strikes)
 wb = xw.Book('LocVol Parameters.xlsx')
 sht = wb.sheets['IRSMFORM']
 
-sht.range('B4').options(transpose=True).value = curve1_maturities
-sht.range('C4').options(transpose=True).value = curve1_values
-sht.range('F4').options(transpose=True).value = curve2_maturities
-sht.range('G4').options(transpose=True).value = curve2_values
-sht.range('J4').options(transpose=True).value = spreadcurve_maturities
-sht.range('K4').options(transpose=True).value = spreadcurve_values
-sht.range('N4').options(transpose=True).value = vol_maturities
-sht.range('O4').options(transpose=True).value = vol_values
-sht.range('R4').value = strikes
-sht.range('Y4').value = blackVols
+sht.range('B6').options(transpose=True).value = curve1_maturities
+sht.range('C6').options(transpose=True).value = curve1_values
+sht.range('E6').options(transpose=True).value = curve2_maturities
+sht.range('F6').options(transpose=True).value = curve2_values
+sht.range('H6').options(transpose=True).value = spreadcurve_maturities
+sht.range('I6').options(transpose=True).value = spreadcurve_values
+sht.range('K6').options(transpose=True).value = vol_maturities
+sht.range('L6').options(transpose=True).value = vol_values
+sht.range('N6').value = strikes
+sht.range('T6').value = blackVols
 
 

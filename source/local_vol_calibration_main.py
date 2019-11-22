@@ -20,6 +20,8 @@ r_tenors = sht.range('B6').options(np.array, expand='down').value
 r_quotes = sht.range('C6').options(np.array, expand='down').value
 rf_tenors = sht.range('E6').options(np.array, expand='down').value
 rf_quotes = sht.range('F6').options(np.array, expand='down').value
+csc_tenors = sht.range('H6').options(np.array, expand='down').value
+csc_quotes = sht.range('I6').options(np.array, expand='down').value
 
 imp_vol_tenors = sht.range('K6').options(np.array, expand='down').value
 imp_vol_strikes = sht.range('N6').options(np.array, expand='table').value
@@ -29,6 +31,7 @@ imp_vol_quotes = sht.range('T6').options(np.array, expand='table').value
 ## Whole Set Data initialization
 r_para = RateCurve(r_tenors, r_quotes)
 rf_para = RateCurve(rf_tenors, rf_quotes)
+csc_para = RateCurve(csc_tenors, csc_quotes)
 
 nb_tenors = len(imp_vol_tenors)
 nb_strikes = imp_vol_strikes.shape[1]
@@ -40,7 +43,7 @@ strike_grid_info = StrikeGridsAllTenors(nb_tenors)
 ## Pillar Data initialization
 i = 0     # which tenor we are looking at
 T = imp_vol_tenors[i]
-tenor_mkt_data = TenorMarketData(S, r_para, rf_para, T)
+tenor_mkt_data = TenorMarketData(S, r_para, rf_para, csc_para, T)
 
 K_inputs = imp_vol_strikes[i, :]
 k_inputs = np.log(K_inputs / tenor_mkt_data.fwd)
