@@ -17,8 +17,8 @@ class TenorMarketData():
         self.DF_r = 1 / self.CF_r
         self.DF_rf = 1 / self.CF_rf
         self.DF_csc = 1 / self.CF_csc
-        self.fwd = self.spot * self.CF_r / self.CF_rf
-        self.fwd_csc = self.fwd / self.CF_csc
+        self.fwd = self.spot * self.CF_r / self.CF_rf / self.CF_csc
+
 
     def black_scholes_price(self, callput, K, vol):
 
