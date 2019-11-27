@@ -26,8 +26,8 @@ class StrikeGridsAllTenors():
             k_minus = -3 * vol_max * np.sqrt(tenor_mkt_data.T)
             k_plus  =  3 * vol_max * np.sqrt(tenor_mkt_data.T)
 
-        Nk_tmp = min( max( int((k_plus - k_minus)/(2.10e-2)), 51), 201)
+        Nk_tmp = min( max( (k_plus - k_minus)/(2.00e-2), 51), 201)
         dk = (k_plus - k_minus) / (Nk_tmp - 1)
-        self.Nk[tenor_i] = min( max( int( (_k_max - _k_min)/dk ), 51), 201)
+        self.Nk[tenor_i] = min( max( np.ceil( (_k_max - _k_min)/dk ), 51), 201)
         self.dk[tenor_i] = (_k_max - _k_min) / (self.Nk[tenor_i] - 1)
         return self.k_min[tenor_i], self.k_max[tenor_i], self.dk[tenor_i], self.Nk[tenor_i]

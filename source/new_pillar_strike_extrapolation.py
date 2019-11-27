@@ -61,6 +61,7 @@ class NewPillarStrikeExtrapolation():
         f = self.moneyness[1] * np.exp(sigma_solved * ( self.d_minus_1 + sigma_solved / 2))
         return f, sigma_solved
 
+    '''
     def call_quantile_slope_func(self, sigma):
         digital_price = - self.slope[-1] / 2
         self.d_minus_M = norm.ppf(digital_price)
@@ -69,6 +70,7 @@ class NewPillarStrikeExtrapolation():
                         - np.log(self.norm_call_price[-1] / self.moneyness[-1] - self.slope[-1] / 2) \
                         + self.d_minus_M**2
         return func_result
+    '''
 
     def otm_call_price_diff(self, sigma):
         digital_price = - self.slope[-1] / 2
@@ -82,21 +84,8 @@ class NewPillarStrikeExtrapolation():
 
 
     def otm_call_extrapolation(self):
-        ############ TEST
-        '''
-        xmin = 0.001
-        xmax = 0.025
-        print(self.otm_call_price_diff(xmin), self.otm_call_price_diff(xmax))
-        sigma_test = np.linspace(xmin, xmax, 50)
-        func_test = self.otm_call_price_diff(sigma_test)
-        plt.plot(sigma_test, func_test, '.-')
-        plt.hlines(0,xmin,xmax)
-        plt.show()
-        '''
-        ############ TEST END
         sigma_solved = newton(self.otm_call_price_diff, self.sigma_guess)
         print(sigma_solved)
-        #sigma_solved = newton(self.call_quantile_slope_func, self.sigma_guess)
 
         f = self.moneyness[-1] * np.exp(sigma_solved * (self.d_minus_M + sigma_solved / 2))
         return f, sigma_solved
@@ -104,16 +93,10 @@ class NewPillarStrikeExtrapolation():
 
     def compute_extreme_strikes(self):
         f_otmput, sigma_otmput = self.otm_put_extrapolation()
-        dig_extrplt_func1 = lambda moneyness: self.digital_extrapolation(moneyness, f_otmput, sigma_otmput) - (1 - self.ALPHA)
-        moneyness_min = newton(dig_extrplt_func1, self.moneyness[1])
-        k_min = np.log(moneyness_min)
-        k_min2 = np.log(f_otmput / (np.exp(sigma_otmput*(0.5*sigma_otmput+5))))
+        k_min = np.log(f_otmput / (np.exp(sigma_otmput * (0.5*sigma_otmput + 5))))
 
         f_otmcall, sigma_otmcall = self.otm_call_extrapolation()
-        dig_extrplt_func2 = lambda moneyness: self.digital_extrapolation(moneyness, f_otmcall, sigma_otmcall) - self.ALPHA
-        moneyness_max = newton(dig_extrplt_func2, self.moneyness[-1])
-        k_max = np.log(moneyness_max)
-        k_max2 = np.log(f_otmcall / (np.exp(sigma_otmcall*(0.5*sigma_otmcall-5))))
+        k_max = np.log(f_otmcall / (np.exp(sigma_otmcall * (0.5*sigma_otmcall - 5))))
 
         return k_min, k_max
     
