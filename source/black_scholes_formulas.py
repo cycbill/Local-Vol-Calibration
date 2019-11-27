@@ -12,6 +12,14 @@ def black_scholes_vanilla(callput, S, K, T, rd, rf, vol):
     callPrem = callput *( Nd1 * S * np.exp(- rf * T) - Nd2 * K * np.exp(- rd * T) )
     return callPrem
 
+def black_scholes_vanilla_fwd(callput, F, K, T, rd, rf, vol):
+    d1 = (np.log(F/K) + (0.5 * vol * vol) * T) / (vol * np.sqrt(T))
+    d2 = d1 - vol * np.sqrt(T)
+    Nd1 = norm.cdf(callput * d1)
+    Nd2 = norm.cdf(callput * d2)
+    callPrem = callput * np.exp(- rd * T) * ( Nd1 * F - Nd2 * K )
+    return callPrem
+
 def black_scholes_vanilla_delta(callput, S, K, T, rd, rf, vol, delta_type):
     d1 = (np.log(S/K) + (rd - rf) * T + (0.5 * vol * vol) * T) / (vol * np.sqrt(T))
     result = callput * norm.cdf(callput * d1)

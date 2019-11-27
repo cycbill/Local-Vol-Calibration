@@ -10,7 +10,8 @@ from new_pillar_strike_extrapolation import NewPillarStrikeExtrapolation
 from compute_maturity_grid import compute_maturity_grid
 
 np.set_printoptions(linewidth=150)
-wb = xw.Book('LocVol Parameters.xlsx')
+#wb = xw.Book('\\source\\LocVol Parameters.xlsx')
+wb = xw.Book(r'source\LocVol Parameters.xlsx')
 sht = wb.sheets['IRSMFORM']
 
 ## Read data from file

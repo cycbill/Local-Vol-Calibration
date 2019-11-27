@@ -37,7 +37,7 @@ class NewPillarStrikeExtrapolation():
 
         
     def compute_norm_call(self):
-        call_price = black_scholes_vanilla(1, self.tenor_mkt_data.spot, self.strike, self.tenor_mkt_data.T, 
+        call_price = black_scholes_vanilla_fwd(1, self.tenor_mkt_data.fwd, self.strike, self.tenor_mkt_data.T, 
                     self.tenor_mkt_data.r, self.tenor_mkt_data.rf, self.imp_vol_para.value_inputs) 
         norm_call_price = call_price / (self.tenor_mkt_data.fwd * self.tenor_mkt_data.DF_r)
         return norm_call_price
@@ -107,11 +107,13 @@ class NewPillarStrikeExtrapolation():
         dig_extrplt_func1 = lambda moneyness: self.digital_extrapolation(moneyness, f_otmput, sigma_otmput) - (1 - self.ALPHA)
         moneyness_min = newton(dig_extrplt_func1, self.moneyness[1])
         k_min = np.log(moneyness_min)
+        k_min2 = np.log(f_otmput / (np.exp(sigma_otmput*(0.5*sigma_otmput+5))))
 
         f_otmcall, sigma_otmcall = self.otm_call_extrapolation()
         dig_extrplt_func2 = lambda moneyness: self.digital_extrapolation(moneyness, f_otmcall, sigma_otmcall) - self.ALPHA
         moneyness_max = newton(dig_extrplt_func2, self.moneyness[-1])
         k_max = np.log(moneyness_max)
+        k_max2 = np.log(f_otmcall / (np.exp(sigma_otmcall*(0.5*sigma_otmcall-5))))
 
         return k_min, k_max
     
