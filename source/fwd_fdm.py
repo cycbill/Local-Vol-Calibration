@@ -3,6 +3,7 @@ import pandas as pd
 from scipy.sparse import diags
 import matplotlib.pyplot as plt
 
+
 class FDMCrankNicolsonNeumann():
     def __init__(self, _x_min, _x_max, _J, _t_min, _t_max, _N, _tenor_mkt_data, _vol_data, _init_condition):
         self.x_min = _x_min

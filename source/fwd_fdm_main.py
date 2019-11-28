@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import xlwings as xw
+from mpl_toolkits.mplot3d import axes3d
 
 from parameters import PiecewiseLinearParameter1D
 from rate_curve_class import RateCurve
@@ -27,8 +28,8 @@ csc_para = RateCurve(T_inputs, rf_inputs)
 tenor_mkt_data = TenorMarketData(S, r_para, rf_para, csc_para, T)
 
 ## k inputs
-imp_vol_atm = 0.2
-loc_vol_inputs = np.array([0.25, 0.15])
+imp_vol_atm = 0.20
+loc_vol_inputs = np.array([0.30, 0.10])
 k_inputs = np.array([-5*imp_vol_atm*np.sqrt(T), 5*imp_vol_atm*np.sqrt(T)])
 K_inputs = tenor_mkt_data.fwd * np.exp(k_inputs)
 
@@ -52,6 +53,7 @@ fdm_cn = FDMCrankNicolsonNeumann(x_min, x_max, x_values, J, t_min, t_max, t_valu
 
 prices, x_values = fdm_cn.step_march()
 plt.show()
+axes3d.plot()
 
 
 K_outputs = tenor_mkt_data.fwd * np.exp(x_values)
@@ -70,7 +72,7 @@ premium_bs_implied_vol = black_scholes_vanilla(callput, S, K_outputs[1:-1], T, t
 
 
 ## Output pde results
-wb = xw.Book(r'source/LocVol Parameters.xlsx')
+wb = xw.Book(r'source\LocVol Parameters.xlsx')
 sht = wb.sheets['FDM_Output']
 
 sht.range('E4').options(transpose=True).value = x_values

@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy.sparse import diags
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import axes3d
 
 class FDMCrankNicolsonNeumann():
     def __init__(self, _x_min, _x_max, _x_values, _J, _t_min, _t_max, _t_values, _theta, _N, _tenor_mkt_data, _vol_data, _init_condition):
@@ -18,6 +19,7 @@ class FDMCrankNicolsonNeumann():
         self.vol_data = _vol_data
         self.init_condition = _init_condition
         self.set_initial_conditions()
+
         
     def set_initial_conditions(self):
         self.dx = (self.x_max - self.x_min) / self.J        # J is number of strike step intervals
@@ -34,10 +36,6 @@ class FDMCrankNicolsonNeumann():
         self.Matrix_I = np.identity(self.J+1)
         self.Matrix_I[0,0] = 0
         self.Matrix_I[self.J, self.J] = 0
-
-        ## Plotting price evelution
-        K = self.tenor_mkt_data.fwd * np.exp(self.x_values)
-        plt.plot(K, self.old_result * self.tenor_mkt_data.spot, color=(self.cur_t * 0.2, 0.9, 0.5), linestyle='--')
 
 
     def calculate_inner_domain(self, n):
@@ -65,12 +63,14 @@ class FDMCrankNicolsonNeumann():
         self.new_result = np.linalg.solve(self.Matrix_L, right_vector)
 
     def step_march(self):
+        fig = plt.figure()
+        ax = fig.gca
         for n in range(1, self.N):
             self.prev_t = self.t_grids[n-1]
             self.cur_t = self.t_grids[n]
             self.calculate_inner_domain(n)
             K = self.tenor_mkt_data.fwd * np.exp(self.x_values)
-            plt.plot(K, self.old_result * self.tenor_mkt_data.spot, color=(self.cur_t * 0.9, 0.2, 0.5))
+            plt.plot(K, np.repeat(self.t_grids[n], self.J+1), zs = self.old_result * self.tenor_mkt_data.spot, color=(self.cur_t * 0.9, 0.2, 0.5))
             self.old_result = self.new_result
         return self.old_result, self.x_values
 
