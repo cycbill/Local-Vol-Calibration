@@ -27,12 +27,15 @@ from black_scholes_formulas import *
 
 
 class LocalVolCalibration():
-    def __init__(self, _x_min, _x_max, _J, _t_min, _t_max, _N, _tenor_mkt_data, _imp_vol_para, _init_cond_lv, _init_cond_bs):
+    def __init__(self, _x_min, _x_max, _x_values, _J, _t_min, _t_max, _t_values, _theta, _N, _tenor_mkt_data, _imp_vol_para, _init_cond_lv, _init_cond_bs):
         self.x_min = _x_min
         self.x_max = _x_max
+        self.x_values = _x_values
         self.J = _J
         self.t_min = _t_min
         self.t_max = _t_max
+        self.t_values = _t_values
+        self.theta = _theta
         self.N = _N
         self.tenor_mkt_data = _tenor_mkt_data
         self.imp_vol_para = _imp_vol_para
@@ -48,9 +51,10 @@ class LocalVolCalibration():
 
 
     def loc_vol_fwd_pde(self):
-        fdm_lv = FDMCrankNicolsonNeumann(self.x_min, self.x_max, self.J, self.t_min, self.t_max, self.N, \
+        fdm_lv = FDMCrankNicolsonNeumann(self.x_min, self.x_max, self.x_values, self.J, self.t_min, self.t_max, self.t_values, self.theta, self.N, \
                                         self.tenor_mkt_data, self.loc_vol_para, self.init_cond_lv)
-        price_grid, k_grid = fdm_lv.step_march()
+        price_matrix, k_grid = fdm_lv.step_march()
+        price_grid = price_matrix[-1, :]
         price_interpolator = PiecewiseLinearParameter1D(k_grid, price_grid)
         prices_5quotes_lv = price_interpolator.interpolate(self.loc_vol_para.x_inputs)
         return prices_5quotes_lv, price_grid, k_grid
@@ -61,9 +65,10 @@ class LocalVolCalibration():
 
         for i, k_quote, imp_vol_quote in zip(range(self.nb_quotes), self.imp_vol_para.x_inputs, self.imp_vol_para.value_inputs):
             loc_vol_constant = ConstantParameter1D(imp_vol_quote)
-            fdm_bs = FDMCrankNicolsonNeumann(self.x_min, self.x_max, self.J, self.t_min, self.t_max, self.N, \
+            fdm_bs = FDMCrankNicolsonNeumann(self.x_min, self.x_max, self.x_values, self.J, self.t_min, self.t_max, self.t_values, self.theta, self.N, \
                                             self.tenor_mkt_data, loc_vol_constant, self.init_cond_bs)
-            price_grid, k_grid = fdm_bs.step_march()
+            price_matrix, k_grid = fdm_bs.step_march()
+            price_grid = price_matrix[-1, :]
             price_interpolator = PiecewiseLinearParameter1D(k_grid, price_grid)
             prices_5quotes_bs[i] = price_interpolator.interpolate(k_quote)
         
@@ -123,12 +128,14 @@ if __name__ == '__main__':
     rf_inputs = np.array([0.0, 0.0])
     r_para = RateCurve(T_inputs, r_inputs)
     rf_para = RateCurve(T_inputs, rf_inputs)
-    tenor_mkt_data = TenorMarketData(S, r_para, rf_para, T)
+    csc_para = RateCurve(T_inputs, rf_inputs)
+    tenor_mkt_data = TenorMarketData(S, r_para, rf_para, csc_para, T)
 
     delta = np.array([0.90, 0.75, 0.50, 0.25, 0.10])
 
     ## Imp Vol inputs
-    imp_vol_inputs = np.array([0.25, 0.22, 0.20, 0.19, 0.21])
+    #imp_vol_inputs = np.array([0.25, 0.22, 0.20, 0.19, 0.21])
+    imp_vol_inputs = np.array([0.20, 0.22, 0.20, 0.18, 0.17])
     imp_vol_atm = imp_vol_inputs[2]
 
     ## Loc vol inputs
@@ -141,20 +148,25 @@ if __name__ == '__main__':
     k_inputs = np.log(K_inputs / tenor_mkt_data.fwd)
     print('k:          ', k_inputs)
 
-    
+
+    J = 200
     x_min = min( k_inputs[0] * 1.1, -5*imp_vol_atm*np.sqrt(T) )
     x_max = max( k_inputs[-1] * 1.1, 5*imp_vol_atm*np.sqrt(T) )
-    J = 200
+    x_values = np.linspace(x_min, x_max, J+1, endpoint=True)
+    N = 200
     t_min = 0
     t_max = T
-    N = 200
+    t_values = np.linspace(t_min, t_max, N+1, endpoint=True)
+    theta = np.repeat(0.5, N+1)
+    theta[0] = 0
+    theta[1:5] = [1.0, 1.0, 1.0, 1.0]
 
 
     imp_vol_para = ImpliedVolatility(K_inputs, k_inputs, imp_vol_inputs)
     init_cond_lv = InitialConditionFirstTenor()     # testing purpose
     init_cond_bs = InitialConditionFirstTenor()     # testing purpose
 
-    lv_calibrator = LocalVolCalibration(x_min, x_max, J, t_min, t_max, N, tenor_mkt_data, imp_vol_para, init_cond_lv, init_cond_bs)
+    lv_calibrator = LocalVolCalibration(x_min, x_max, x_values, J, t_min, t_max, t_values, theta, N, tenor_mkt_data, imp_vol_para, init_cond_lv, init_cond_bs)
     loc_vol_solved, prices_5quotes_lv, prices_5quotes_bs, price_grid_lv, k_grid = lv_calibrator.calibration(loc_vol_guess)
     
     

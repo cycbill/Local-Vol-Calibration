@@ -2,13 +2,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import xlwings as xw
-from mpl_toolkits.mplot3d import axes3d
 
 from parameters import PiecewiseLinearParameter1D
 from rate_curve_class import RateCurve
 from tenor_market_data import TenorMarketData
 from initial_condition import InitialConditionFirstTenor
-from fwd_fdm_2 import FDMCrankNicolsonNeumann
+from fwd_fdm import FDMCrankNicolsonNeumann
 from black_scholes_formulas import *
 
 ## Trade and single data
@@ -29,19 +28,19 @@ tenor_mkt_data = TenorMarketData(S, r_para, rf_para, csc_para, T)
 
 ## k inputs
 imp_vol_atm = 0.20
-loc_vol_inputs = np.array([0.30, 0.10])
+loc_vol_inputs = np.array([0.20, 0.20])
 k_inputs = np.array([-5*imp_vol_atm*np.sqrt(T), 5*imp_vol_atm*np.sqrt(T)])
 K_inputs = tenor_mkt_data.fwd * np.exp(k_inputs)
 
-J = 200
+J = 200     # nb of strike intervals
 x_min = k_inputs[0]
 x_max = k_inputs[-1]
 x_values = np.linspace(x_min, x_max, J+1, endpoint=True)
-N = 2000
+N = 100     # nb of t intervals
 t_min = 0
 t_max = T
 t_values = np.linspace(t_min, t_max, N+1, endpoint=True)
-theta = np.repeat(0.5, N)
+theta = np.repeat(0.5, N+1)
 theta[0] = 0
 theta[1:5] = [1.0, 1.0, 1.0, 1.0]
 
@@ -51,15 +50,24 @@ loc_vol_para = PiecewiseLinearParameter1D(k_inputs, loc_vol_inputs)
 init_cond = InitialConditionFirstTenor()
 fdm_cn = FDMCrankNicolsonNeumann(x_min, x_max, x_values, J, t_min, t_max, t_values, theta, N, tenor_mkt_data, loc_vol_para, init_cond)
 
-prices, x_values = fdm_cn.step_march()
-plt.show()
-axes3d.plot()
+prices_matrix, x_values = fdm_cn.step_march()
+prices = prices_matrix[-1,:]
 
 
 K_outputs = tenor_mkt_data.fwd * np.exp(x_values)
 payoff_outputs = init_cond.compute(x_values) * S
 premium_outputs = prices * tenor_mkt_data.fwd * tenor_mkt_data.DF_r
 premium_bs_vatm = black_scholes_vanilla(callput, S, K_outputs, T, tenor_mkt_data.r, tenor_mkt_data.rf, imp_vol_atm)
+
+## Plot pde diffusion
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+for n in range(0, N+1):
+    ax.plot(K_outputs, np.repeat(t_values[n], J+1), zs = prices_matrix[n, :] * tenor_mkt_data.spot, color=(n/N * 0.9, 0.2, 0.5))
+ax.set_xlabel('K')
+ax.set_ylabel('T')
+ax.set_zlabel('Premium')
+plt.show()
 
 
 dual_delta_bs_analytic = black_scholes_vanilla_dual_delta(callput, S, K_outputs, T, tenor_mkt_data.r, tenor_mkt_data.rf, imp_vol_atm)

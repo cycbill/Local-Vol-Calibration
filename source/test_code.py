@@ -5,7 +5,5 @@ import matplotlib.pyplot as plt
 from parameters import *
 
 
-a = np.array([1, 2, 3, 4, 5])
-b = np.tile(a, (10,1))
-
-print(b)
+for i in range(1, 10):
+    print(i)
