@@ -27,20 +27,20 @@ csc_para = RateCurve(T_inputs, rf_inputs)
 tenor_mkt_data = TenorMarketData(S, r_para, rf_para, csc_para, T)
 
 ## k inputs
-imp_vol_atm = 0.20
-loc_vol_inputs = np.array([0.20, 0.20])
-k_inputs = np.array([-5*imp_vol_atm*np.sqrt(T), 5*imp_vol_atm*np.sqrt(T)])
+imp_vol_atm = 0.10
+loc_vol_inputs = np.array([0.30, 0.10, 0.20])
+k_inputs = np.array([-5*imp_vol_atm*np.sqrt(T), 0, 5*imp_vol_atm*np.sqrt(T)])
 K_inputs = tenor_mkt_data.fwd * np.exp(k_inputs)
 
-J = 200     # nb of strike intervals
+J = 201     # nb of strike points
 x_min = k_inputs[0]
 x_max = k_inputs[-1]
-x_values = np.linspace(x_min, x_max, J+1, endpoint=True)
-N = 100     # nb of t intervals
+x_values = np.linspace(x_min, x_max, J, endpoint=True)
+N = 101     # nb of t points
 t_min = 0
 t_max = T
-t_values = np.linspace(t_min, t_max, N+1, endpoint=True)
-theta = np.repeat(0.5, N+1)
+t_values = np.linspace(t_min, t_max, N, endpoint=True)
+theta = np.repeat(0.5, N)
 theta[0] = 0
 theta[1:5] = [1.0, 1.0, 1.0, 1.0]
 
@@ -50,7 +50,7 @@ loc_vol_para = PiecewiseLinearParameter1D(k_inputs, loc_vol_inputs)
 init_cond = InitialConditionFirstTenor()
 fdm_cn = FDMCrankNicolsonNeumann(x_min, x_max, x_values, J, t_min, t_max, t_values, theta, N, tenor_mkt_data, loc_vol_para, init_cond)
 
-prices_matrix, x_values = fdm_cn.step_march()
+prices_matrix = fdm_cn.step_march()
 prices = prices_matrix[-1,:]
 
 
@@ -62,8 +62,8 @@ premium_bs_vatm = black_scholes_vanilla(callput, S, K_outputs, T, tenor_mkt_data
 ## Plot pde diffusion
 fig = plt.figure()
 ax = fig.gca(projection='3d')
-for n in range(0, N+1):
-    ax.plot(K_outputs, np.repeat(t_values[n], J+1), zs = prices_matrix[n, :] * tenor_mkt_data.spot, color=(n/N * 0.9, 0.2, 0.5))
+for n in range(0, N):
+    ax.plot(K_outputs, np.repeat(t_values[n], J), zs = prices_matrix[n, :] * tenor_mkt_data.spot, color=(n/N * 0.9, 0.2, 0.5))
 ax.set_xlabel('K')
 ax.set_ylabel('T')
 ax.set_zlabel('Premium')

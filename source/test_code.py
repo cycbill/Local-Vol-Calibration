@@ -1,5 +1,6 @@
 import numpy as np 
 from scipy.optimize import minimize, LinearConstraint
+from scipy import interpolate
 import matplotlib.pyplot as plt
 
 from parameters import *
@@ -8,9 +9,42 @@ from scipy.interpolate import PchipInterpolator, CubicSpline
 from scipy.stats import norm
 from black_scholes_formulas import black_scholes_vanilla
 
-#x = np.array([1, 2, 2.1, 3, 4, 5])
-#y = np.array([1.0, 1.1, 1.5, 1.8, 2.8, 5.6])
+from scipy.interpolate import CubicSpline
 
+from cubic_spline_class import CubicSpline_LinearExtrp
+from initial_condition import InitialConditionOtherTenors
+
+
+x = np.linspace(0, 1, 10, endpoint=True)
+y = norm.cdf(x)
+
+
+
+
+
+left_deriv = (y[1] - y[0]) / (x[1] - x[0])
+right_deriv = (y[-1] - y[-2]) / (x[-1] - x[-2])
+
+
+#f = interpolate.interp1d(x, y, kind = 'cubic', fill_value='extrapolate')
+f1 = CubicSpline(x, y, bc_type='natural', extrapolate=True)
+f2 = CubicSpline(x, y, bc_type=((1, left_deriv), (1, right_deriv)), extrapolate=True)
+f3 = CubicSpline_LinearExtrp(x, y)
+f4 = InitialConditionOtherTenors(x, y)
+
+
+
+xnew = np.linspace(-1, 2, 50, endpoint=True)
+ynew1 = f1(xnew)
+ynew2 = f2(xnew)
+ynew3 = f3.interpolate(xnew)
+ynew4 = f4.compute(xnew)
+
+#plt.plot(x, y, 'o', xnew, ynew1, 'r-', xnew, ynew3, 'b-', xnew, ynew4, 'g-')
+plt.plot(x, y, 'o', xnew, ynew4, 'g-')
+plt.show()
+
+'''
 x = np.linspace(0.001, 100, 100, endpoint=True)
 k = 50
 v = 0.1
@@ -47,3 +81,4 @@ plt.plot(xs[2:], ddy_cs, 'r')
 plt.plot(xs[2:], ddy_pchip, 'b')
 plt.title('ddY')
 plt.show()
+'''

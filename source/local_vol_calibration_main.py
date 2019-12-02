@@ -51,7 +51,7 @@ def Calib(i):
     K_inputs = imp_vol_strikes[i, :]
     k_inputs = np.log(K_inputs / tenor_mkt_data.fwd)
     imp_vol_inputs = imp_vol_quotes[i, :]
-    '''
+    
     imp_vol_para = ImpliedVolatility(K_inputs, k_inputs, imp_vol_inputs)
 
     sum_sqr_vol_T = compute_sum_sqr_vol_T(imp_vol_quotes, imp_vol_tenors)
@@ -74,7 +74,7 @@ def Calib(i):
     print('k_min: {}, k_max: {}, dk: {}, Nk: {}.'.format(k_min, k_max, dk, Nk))
     print('NT: ', NT)
     print('k_min_extrplt: {}, k_max_extrplt: {}.'.format(k_min_extrplt, k_max_extrplt))
-    '''
+    
 
     ## Local vol initial guess
     lv_init_guess = compute_local_vol_init_guess(k_inputs, imp_vol_inputs, T)

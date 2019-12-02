@@ -9,16 +9,30 @@ def black_scholes_vanilla(callput, S, K, T, rd, rf, vol):
     d2 = d1 - vol * np.sqrt(T)
     Nd1 = norm.cdf(callput * d1)
     Nd2 = norm.cdf(callput * d2)
-    callPrem = callput *( Nd1 * S * np.exp(- rf * T) - Nd2 * K * np.exp(- rd * T) )
-    return callPrem
+    Prem = callput *( Nd1 * S * np.exp(- rf * T) - Nd2 * K * np.exp(- rd * T) )
+    return Prem
 
 def black_scholes_vanilla_fwd(callput, F, K, T, rd, rf, vol):
     d1 = (np.log(F/K) + (0.5 * vol * vol) * T) / (vol * np.sqrt(T))
     d2 = d1 - vol * np.sqrt(T)
     Nd1 = norm.cdf(callput * d1)
     Nd2 = norm.cdf(callput * d2)
-    callPrem = callput * np.exp(- rd * T) * ( Nd1 * F - Nd2 * K )
-    return callPrem
+    Prem = callput * np.exp(- rd * T) * ( Nd1 * F - Nd2 * K )
+    return Prem
+'''
+def black_scholes_vanilla_fwd_norm(callput, F, K, T, rd, rf, vol):
+    Prem = black_scholes_vanilla_fwd(callput, F, K, T, rd, rf, vol)
+    DF_rd = np.exp(- rd * T)
+    norm_prem = Prem / (DF_rd * F)
+    return norm_prem
+'''
+def black_scholes_vanilla_fwd_norm(callput, k, T, rd, vol):
+    d1 = ( -k + (0.5 * vol * vol) * T) / (vol * np.sqrt(T))
+    d2 = d1 - vol * np.sqrt(T)
+    Nd1 = norm.cdf(callput * d1)
+    Nd2 = norm.cdf(callput * d2)
+    norm_prem = callput * (Nd1 - np.exp(k) * Nd2)
+    return norm_prem
 
 def black_scholes_vanilla_delta(callput, S, K, T, rd, rf, vol, delta_type):
     d1 = (np.log(S/K) + (rd - rf) * T + (0.5 * vol * vol) * T) / (vol * np.sqrt(T))

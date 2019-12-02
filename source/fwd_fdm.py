@@ -9,12 +9,12 @@ class FDMCrankNicolsonNeumann():
         self.x_min = _x_min
         self.x_max = _x_max
         self.x_values = _x_values
-        self.J = _J
+        self.J = int(_J)
         self.t_min = _t_min
         self.t_max = _t_max
         self.t_grids = _t_values
         self.theta = _theta
-        self.N = _N
+        self.N = int(_N)
         self.tenor_mkt_data = _tenor_mkt_data
         self.vol_data = _vol_data
         self.init_condition = _init_condition
@@ -22,22 +22,22 @@ class FDMCrankNicolsonNeumann():
 
         
     def set_initial_conditions(self):
-        self.dx = (self.x_max - self.x_min) / self.J        # J is number of strike step intervals
-        self.result = np.zeros((self.N+1, self.J+1))
+        self.dx = (self.x_max - self.x_min) / (self.J - 1)        # J is number of strike step intervals
+        self.result = np.zeros((self.N, self.J))
         self.result[0,:] = self.init_condition.compute(self.x_values)
         #self.old_result = self.init_condition.compute(self.x_values)
         #self.new_result = np.zeros_like(self.old_result)
         self.zeta = self.vol_data.interpolate(self.x_values) ** 2 / (2 * self.dx ** 2)
 
         ## Pre-compute coefficient matrices M_L and M_R, which are time independent.
-        self.Matrix_A = np.zeros((self.J+1, self.J+1))
-        for j in range(1, self.J):
+        self.Matrix_A = np.zeros((self.J, self.J))
+        for j in range(1, self.J-1):
             self.Matrix_A[j, j-1] = (1 + self.dx / 2) * self.zeta[j]
             self.Matrix_A[j, j] =  -2 * self.zeta[j]
             self.Matrix_A[j, j+1] = (1 - self.dx / 2) * self.zeta[j]
-        self.Matrix_I = np.identity(self.J+1)
+        self.Matrix_I = np.identity(self.J)
         self.Matrix_I[0,0] = 0
-        self.Matrix_I[self.J, self.J] = 0
+        self.Matrix_I[-1, -1] = 0
 
 
     def calculate_inner_domain(self, n):
@@ -65,9 +65,9 @@ class FDMCrankNicolsonNeumann():
         self.result[n, :] = np.linalg.solve(self.Matrix_L, right_vector)
 
     def step_march(self):
-        for n in range(1, self.N+1):
+        for n in range(1, self.N):
             self.prev_t = self.t_grids[n-1]
             self.cur_t = self.t_grids[n]
             self.calculate_inner_domain(n)
-        return self.result, self.x_values
+        return self.result
 
