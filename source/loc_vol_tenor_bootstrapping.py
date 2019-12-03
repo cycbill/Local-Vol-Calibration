@@ -100,9 +100,9 @@ def loc_vol_tenor_bootstrapping():
         if i == 0:
             init_cond_lv = InitialConditionFirstTenor()
         else:
-            init_cond_lv = InitialConditionOtherTenors(k_prev, price_prev)
+            init_cond_lv = InitialConditionOtherTenors(k_prev, price_prev, tenor_mkt_data.fwd)
         ############################## TEST ############################################
-        if i > -1: #== (nb_tenors - 1):
+        if i == (nb_tenors - 1):
             price_interpolate = init_cond_lv.compute(k_grids)
             plt.plot(k_grids, price_interpolate)
             plt.title('Pillar {} Price from last pillar interpolate'.format(i))
@@ -137,6 +137,11 @@ def loc_vol_tenor_bootstrapping():
         if i == (nb_tenors - 2):
             plt.plot(k_prev, price_prev, '.-')
             plt.title('Pillar {} Result'.format(i))
+            plt.show()
+
+            delta_test2 = np.diff(price_prev) / np.diff(np.exp(k_prev))
+            plt.plot(k_prev[1:], delta_test2)
+            plt.title('Delta from price interpolation at pillar {}'.format(i))
             plt.show()
         ############################### TEST END ################################
 
