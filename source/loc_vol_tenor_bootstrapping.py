@@ -101,11 +101,18 @@ def loc_vol_tenor_bootstrapping():
             init_cond_lv = InitialConditionFirstTenor()
         else:
             init_cond_lv = InitialConditionOtherTenors(k_prev, price_prev)
-        if i == 1:
+        ############################## TEST ############################################
+        if i > -1: #== (nb_tenors - 1):
             price_interpolate = init_cond_lv.compute(k_grids)
             plt.plot(k_grids, price_interpolate)
             plt.title('Pillar {} Price from last pillar interpolate'.format(i))
             plt.show()
+
+            delta_test = np.diff(price_interpolate) / np.diff(np.exp(k_grids))
+            plt.plot(k_grids[1:], delta_test)
+            plt.title('Delta from price interpolation at pillar {}'.format(i))
+            plt.show()
+        ############################## TEST END ########################################
 
         ## Calibrate local volatility
         debug = False
@@ -125,10 +132,13 @@ def loc_vol_tenor_bootstrapping():
         price_prev = price_grid_lv
         if i == 0:
             print_to_excel(k_prev, price_prev)
-        if i == 1 or i == 0:
+        
+        ################################ TEST ###################################
+        if i == (nb_tenors - 2):
             plt.plot(k_prev, price_prev, '.-')
             plt.title('Pillar {} Result'.format(i))
             plt.show()
+        ############################### TEST END ################################
 
     
     return loc_vol_all_tenors, price_lv_all_tenors, price_bs_all_tenors, price_cls_all_tenors, imp_vol_tenors, k_all_tenors
@@ -145,7 +155,7 @@ if __name__ == '__main__':
     ax1 = fig.add_subplot(121, projection='3d')
     ax2 = fig.add_subplot(122, projection='3d')
 
-    for i in range(nb_tenors):
+    for i in range(nb_tenors-1, 0, -1):
         xs = k_all_tenors[i,:]
         ys = np.repeat(imp_vol_tenors[i], nb_strikes)
 
