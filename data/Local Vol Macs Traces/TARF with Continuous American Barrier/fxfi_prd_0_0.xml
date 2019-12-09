@@ -1,0 +1,433 @@
+<?xml version="1.0"?>
+<!DOCTYPE FxfiTransaction>
+<FxfiTransaction>
+ <ProductID>-84</ProductID>
+ <Template>
+  <Block Type="5">TARN
+   <ACCSTK Type="CHAR" Abs="0" Ord="0">Default</ACCSTK>
+   <ACSKBD Type="BOOLEAN" Abs="0" Ord="0">0</ACSKBD>
+   <ACSTKV Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</ACSTKV>
+   <ADJTRC Type="CHAR" Abs="0" Ord="0">Strike</ADJTRC>
+   <ARCH Type="CHAR" Abs="0" Ord="0">ECB:Fixing</ARCH>
+   <BHR Type="BOOLEAN" Abs="0" Ord="0">0</BHR>
+   <BLR Type="BOOLEAN" Abs="0" Ord="0">0</BLR>
+   <BNDBSL Type="CHAR" Abs="0" Ord="0">ITM</BNDBSL>
+   <BNDHIG Type="CHAR" Abs="0" Ord="0">High</BNDHIG>
+   <BNDLOW Type="CHAR" Abs="0" Ord="0">Mid</BNDLOW>
+   <BNDPIV Type="CHAR" Abs="0" Ord="0">Sell</BNDPIV>
+   <BNOMIN Type="BOOLEAN" Abs="0" Ord="0">0</BNOMIN>
+   <BWEIGH Type="BOOLEAN" Abs="0" Ord="0">0</BWEIGH>
+   <CALHOL Type="CHAR" Abs="0" Ord="0">TGT</CALHOL>
+   <CAP Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</CAP>
+   <CAPLOS Type="CHAR" Abs="0" Ord="0">None</CAPLOS>
+   <CAPQUO Type="CHAR" Abs="0" Ord="0"></CAPQUO>
+   <CBSTRK Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</CBSTRK>
+   <CCYHOL Type="CHAR" Abs="0" Ord="0"></CCYHOL>
+   <CHR Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</CHR>
+   <CLR Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</CLR>
+   <CNBFIX Type="BOOLEAN" Abs="0" Ord="0">1</CNBFIX>
+   <CNOMIN Type="DOUBLE" Abs="0" Ord="0">1000000.000000000000000</CNOMIN>
+   <COWGHS Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</COWGHS>
+   <COWGHT Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</COWGHT>
+   <CP Type="CHAR" Abs="0" Ord="0">Call</CP>
+   <CPIVOT Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</CPIVOT>
+   <CRTARG Type="CHAR" Abs="0" Ord="0">Truncated coupon</CRTARG>
+   <CSSTRK Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</CSSTRK>
+   <CSTRIK Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</CSTRIK>
+   <CUTOFF Type="CHAR" Abs="0" Ord="0">NYC</CUTOFF>
+   <CWEIGH Type="DOUBLE" Abs="0" Ord="0">1.000000000000000</CWEIGH>
+   <DELIV Type="DATE" Abs="0" Ord="0">13350</DELIV>
+   <DIGQOT Type="CHAR" Abs="0" Ord="0">DEN-NUM</DIGQOT>
+   <DIGQT1 Type="CHAR" Abs="0" Ord="0">DEN-NUM</DIGQT1>
+   <DIGQT2 Type="CHAR" Abs="0" Ord="0">DEN-NUM</DIGQT2>
+   <DIGQT3 Type="CHAR" Abs="0" Ord="0">DEN-NUM</DIGQT3>
+   <DNBFIX Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</DNBFIX>
+   <EDATE Type="DATE" Abs="0" Ord="0">13348</EDATE>
+   <ERKIBR Type="CHAR" Abs="0" Ord="0">None</ERKIBR>
+   <ERKIDN Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</ERKIDN>
+   <ERKIUP Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</ERKIUP>
+   <EXP Type="DATE" Abs="0" Ord="0">13348</EXP>
+   <EXPRBT Type="CHAR" Abs="0" Ord="0">No Top-up</EXPRBT>
+   <FIGUR Type="DOUBLE" Abs="0" Ord="0">0.150000000000000</FIGUR>
+   <FIGUR2 Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</FIGUR2>
+   <FX_NB Type="DATE" Abs="0" Ord="0">6</FX_NB>
+   <HORIZ Type="DATE" Abs="0" Ord="0">13189</HORIZ>
+   <INBFIX Type="DOUBLE" Abs="0" Ord="0">6.000000000000000</INBFIX>
+   <INOMIN Type="BOOLEAN" Abs="0" Ord="0">1</INOMIN>
+   <ITMCRT Type="CHAR" Abs="0" Ord="0">(S-K)&gt;0</ITMCRT>
+   <LEDATE Type="CHAR" Abs="0" Ord="0"></LEDATE>
+   <LOW Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</LOW>
+   <LSDATE Type="CHAR" Abs="0" Ord="0">1w</LSDATE>
+   <MID Type="DOUBLE" Abs="0" Ord="0">200.000000000000000</MID>
+   <MULTIN Type="CHAR" Abs="0" Ord="0">Single Value</MULTIN>
+   <NATQOT Type="CHAR" Abs="0" Ord="0">EUR-USD</NATQOT>
+   <OTMCUR Type="CHAR" Abs="0" Ord="0">CUR1</OTMCUR>
+   <PSTYLE Type="CHAR" Abs="0" Ord="0">None</PSTYLE>
+   <RBQUOT Type="CHAR" Abs="0" Ord="0">USD pips</RBQUOT>
+   <REBNOU Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</REBNOU>
+   <REBOUT Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</REBOUT>
+   <SCHD Type="CHAR" Abs="0" Ord="0">1M MODFOL</SCHD>
+   <SDATE Type="DATE" Abs="0" Ord="0">13196</SDATE>
+   <SETCUR Type="CHAR" Abs="0" Ord="0">USD</SETCUR>
+   <SETTL Type="CHAR" Abs="0" Ord="0">Delivery</SETTL>
+   <SHIFT Type="CHAR" Abs="0" Ord="0">+0 BUSINESS DAY</SHIFT>
+   <SHIFTP Type="CHAR" Abs="0" Ord="0">+2 DAYS MODFOL</SHIFTP>
+   <SLOPE Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</SLOPE>
+   <SLOPE1 Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</SLOPE1>
+   <SLOPE2 Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</SLOPE2>
+   <SLOPE3 Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</SLOPE3>
+   <SPTNFF Type="DOUBLE" Abs="0" Ord="0">1.000000000000000</SPTNFF>
+   <SPTOFF Type="DOUBLE" Abs="0" Ord="0">1.000000000000000</SPTOFF>
+   <STKBD1 Type="BOOLEAN" Abs="0" Ord="0">0</STKBD1>
+   <STKBD2 Type="BOOLEAN" Abs="0" Ord="0">0</STKBD2>
+   <STKBD3 Type="BOOLEAN" Abs="0" Ord="0">0</STKBD3>
+   <STKBDT Type="BOOLEAN" Abs="0" Ord="0">0</STKBDT>
+   <STKBRG Type="BOOLEAN" Abs="0" Ord="0">0</STKBRG>
+   <STKMD1 Type="CHAR" Abs="0" Ord="0">Fixed</STKMD1>
+   <STKMD2 Type="CHAR" Abs="0" Ord="0">Fixed</STKMD2>
+   <STKMD3 Type="CHAR" Abs="0" Ord="0">Fixed</STKMD3>
+   <STKMOD Type="CHAR" Abs="0" Ord="0">Fixed</STKMOD>
+   <STRIK1 Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</STRIK1>
+   <STRIK2 Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</STRIK2>
+   <STRIK3 Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</STRIK3>
+   <STRIKE Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</STRIKE>
+   <TGQUOT Type="CHAR" Abs="0" Ord="0">Qty-Pay</TGQUOT>
+   <TNOMIN Type="DOUBLE" Abs="0" Ord="0">6000000.000000000000000</TNOMIN>
+   <TQUOT Type="CHAR" Abs="0" Ord="0"></TQUOT>
+   <TSTYLE Type="CHAR" Abs="0" Ord="0">Standard</TSTYLE>
+   <TTGREB Type="CHAR" Abs="0" Ord="0">Fixed</TTGREB>
+   <UP Type="DOUBLE" Abs="0" Ord="0">100.000000000000000</UP>
+   <FldVector>
+    <BSTRIK Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</BSTRIK>
+    <BSTRIK Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</BSTRIK>
+    <BSTRIK Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</BSTRIK>
+    <BSTRIK Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</BSTRIK>
+    <BSTRIK Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</BSTRIK>
+    <BSTRIK Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</BSTRIK>
+   </FldVector>
+   <FldVector>
+    <FIXNOM Type="DOUBLE" Abs="0" Ord="0">1000000.000000000000000</FIXNOM>
+    <FIXNOM Type="DOUBLE" Abs="0" Ord="1">1000000.000000000000000</FIXNOM>
+    <FIXNOM Type="DOUBLE" Abs="0" Ord="2">1000000.000000000000000</FIXNOM>
+    <FIXNOM Type="DOUBLE" Abs="0" Ord="3">1000000.000000000000000</FIXNOM>
+    <FIXNOM Type="DOUBLE" Abs="0" Ord="4">1000000.000000000000000</FIXNOM>
+    <FIXNOM Type="DOUBLE" Abs="0" Ord="5">1000000.000000000000000</FIXNOM>
+   </FldVector>
+   <FldVector>
+    <FXDATE Type="DATE" Abs="0" Ord="0">13196</FXDATE>
+    <FXDATE Type="DATE" Abs="0" Ord="1">13225</FXDATE>
+    <FXDATE Type="DATE" Abs="0" Ord="2">13257</FXDATE>
+    <FXDATE Type="DATE" Abs="0" Ord="3">13286</FXDATE>
+    <FXDATE Type="DATE" Abs="0" Ord="4">13317</FXDATE>
+    <FXDATE Type="DATE" Abs="0" Ord="5">13348</FXDATE>
+   </FldVector>
+   <FldVector>
+    <FXKSL Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</FXKSL>
+    <FXKSL Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</FXKSL>
+    <FXKSL Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</FXKSL>
+    <FXKSL Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</FXKSL>
+    <FXKSL Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</FXKSL>
+    <FXKSL Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</FXKSL>
+   </FldVector>
+   <FldVector>
+    <FXKSL1 Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</FXKSL1>
+    <FXKSL1 Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</FXKSL1>
+    <FXKSL1 Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</FXKSL1>
+    <FXKSL1 Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</FXKSL1>
+    <FXKSL1 Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</FXKSL1>
+    <FXKSL1 Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</FXKSL1>
+   </FldVector>
+   <FldVector>
+    <FXKSL2 Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</FXKSL2>
+    <FXKSL2 Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</FXKSL2>
+    <FXKSL2 Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</FXKSL2>
+    <FXKSL2 Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</FXKSL2>
+    <FXKSL2 Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</FXKSL2>
+    <FXKSL2 Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</FXKSL2>
+   </FldVector>
+   <FldVector>
+    <FXKSL3 Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</FXKSL3>
+    <FXKSL3 Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</FXKSL3>
+    <FXKSL3 Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</FXKSL3>
+    <FXKSL3 Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</FXKSL3>
+    <FXKSL3 Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</FXKSL3>
+    <FXKSL3 Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</FXKSL3>
+   </FldVector>
+   <FldVector>
+    <FXLEVL Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</FXLEVL>
+    <FXLEVL Type="DOUBLE" Abs="0" Ord="1">1.083000000000000</FXLEVL>
+    <FXLEVL Type="DOUBLE" Abs="0" Ord="2">1.083000000000000</FXLEVL>
+    <FXLEVL Type="DOUBLE" Abs="0" Ord="3">1.083000000000000</FXLEVL>
+    <FXLEVL Type="DOUBLE" Abs="0" Ord="4">1.083000000000000</FXLEVL>
+    <FXLEVL Type="DOUBLE" Abs="0" Ord="5">1.083000000000000</FXLEVL>
+   </FldVector>
+   <FldVector>
+    <FXPDAT Type="DATE" Abs="0" Ord="0">13198</FXPDAT>
+    <FXPDAT Type="DATE" Abs="0" Ord="1">13229</FXPDAT>
+    <FXPDAT Type="DATE" Abs="0" Ord="2">13259</FXPDAT>
+    <FXPDAT Type="DATE" Abs="0" Ord="3">13288</FXPDAT>
+    <FXPDAT Type="DATE" Abs="0" Ord="4">13320</FXPDAT>
+    <FXPDAT Type="DATE" Abs="0" Ord="5">13350</FXPDAT>
+   </FldVector>
+   <FldVector>
+    <FXRPDT Type="DATE" Abs="0" Ord="0">13198</FXRPDT>
+    <FXRPDT Type="DATE" Abs="0" Ord="1">13229</FXRPDT>
+    <FXRPDT Type="DATE" Abs="0" Ord="2">13259</FXRPDT>
+    <FXRPDT Type="DATE" Abs="0" Ord="3">13288</FXRPDT>
+    <FXRPDT Type="DATE" Abs="0" Ord="4">13321</FXRPDT>
+    <FXRPDT Type="DATE" Abs="0" Ord="5">13350</FXRPDT>
+   </FldVector>
+   <FldVector>
+    <FXSKAC Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</FXSKAC>
+    <FXSKAC Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</FXSKAC>
+    <FXSKAC Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</FXSKAC>
+    <FXSKAC Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</FXSKAC>
+    <FXSKAC Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</FXSKAC>
+    <FXSKAC Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</FXSKAC>
+   </FldVector>
+   <FldVector>
+    <FXSTK1 Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</FXSTK1>
+    <FXSTK1 Type="DOUBLE" Abs="0" Ord="1">1.083000000000000</FXSTK1>
+    <FXSTK1 Type="DOUBLE" Abs="0" Ord="2">1.083000000000000</FXSTK1>
+    <FXSTK1 Type="DOUBLE" Abs="0" Ord="3">1.083000000000000</FXSTK1>
+    <FXSTK1 Type="DOUBLE" Abs="0" Ord="4">1.083000000000000</FXSTK1>
+    <FXSTK1 Type="DOUBLE" Abs="0" Ord="5">1.083000000000000</FXSTK1>
+   </FldVector>
+   <FldVector>
+    <FXSTK2 Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</FXSTK2>
+    <FXSTK2 Type="DOUBLE" Abs="0" Ord="1">1.083000000000000</FXSTK2>
+    <FXSTK2 Type="DOUBLE" Abs="0" Ord="2">1.083000000000000</FXSTK2>
+    <FXSTK2 Type="DOUBLE" Abs="0" Ord="3">1.083000000000000</FXSTK2>
+    <FXSTK2 Type="DOUBLE" Abs="0" Ord="4">1.083000000000000</FXSTK2>
+    <FXSTK2 Type="DOUBLE" Abs="0" Ord="5">1.083000000000000</FXSTK2>
+   </FldVector>
+   <FldVector>
+    <FXSTK3 Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</FXSTK3>
+    <FXSTK3 Type="DOUBLE" Abs="0" Ord="1">1.083000000000000</FXSTK3>
+    <FXSTK3 Type="DOUBLE" Abs="0" Ord="2">1.083000000000000</FXSTK3>
+    <FXSTK3 Type="DOUBLE" Abs="0" Ord="3">1.083000000000000</FXSTK3>
+    <FXSTK3 Type="DOUBLE" Abs="0" Ord="4">1.083000000000000</FXSTK3>
+    <FXSTK3 Type="DOUBLE" Abs="0" Ord="5">1.083000000000000</FXSTK3>
+   </FldVector>
+   <FldVector>
+    <FXVAL Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</FXVAL>
+    <FXVAL Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</FXVAL>
+    <FXVAL Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</FXVAL>
+    <FXVAL Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</FXVAL>
+    <FXVAL Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</FXVAL>
+    <FXVAL Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</FXVAL>
+   </FldVector>
+   <FldVector>
+    <FXVDAT Type="DATE" Abs="0" Ord="0">13196</FXVDAT>
+    <FXVDAT Type="DATE" Abs="0" Ord="1">13225</FXVDAT>
+    <FXVDAT Type="DATE" Abs="0" Ord="2">13257</FXVDAT>
+    <FXVDAT Type="DATE" Abs="0" Ord="3">13286</FXVDAT>
+    <FXVDAT Type="DATE" Abs="0" Ord="4">13317</FXVDAT>
+    <FXVDAT Type="DATE" Abs="0" Ord="5">13348</FXVDAT>
+   </FldVector>
+   <FldVector>
+    <HRG Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</HRG>
+    <HRG Type="DOUBLE" Abs="0" Ord="1">1.083000000000000</HRG>
+    <HRG Type="DOUBLE" Abs="0" Ord="2">1.083000000000000</HRG>
+    <HRG Type="DOUBLE" Abs="0" Ord="3">1.083000000000000</HRG>
+    <HRG Type="DOUBLE" Abs="0" Ord="4">1.083000000000000</HRG>
+    <HRG Type="DOUBLE" Abs="0" Ord="5">1.083000000000000</HRG>
+   </FldVector>
+   <FldVector>
+    <LOWV Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</LOWV>
+    <LOWV Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</LOWV>
+    <LOWV Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</LOWV>
+    <LOWV Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</LOWV>
+    <LOWV Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</LOWV>
+    <LOWV Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</LOWV>
+   </FldVector>
+   <FldVector>
+    <LRG Type="DOUBLE" Abs="0" Ord="0">0.000000010000000</LRG>
+    <LRG Type="DOUBLE" Abs="0" Ord="1">0.000000010000000</LRG>
+    <LRG Type="DOUBLE" Abs="0" Ord="2">0.000000010000000</LRG>
+    <LRG Type="DOUBLE" Abs="0" Ord="3">0.000000010000000</LRG>
+    <LRG Type="DOUBLE" Abs="0" Ord="4">0.000000010000000</LRG>
+    <LRG Type="DOUBLE" Abs="0" Ord="5">0.000000010000000</LRG>
+   </FldVector>
+   <FldVector>
+    <MIDV Type="DOUBLE" Abs="0" Ord="0">200.000000000000000</MIDV>
+    <MIDV Type="DOUBLE" Abs="0" Ord="1">200.000000000000000</MIDV>
+    <MIDV Type="DOUBLE" Abs="0" Ord="2">200.000000000000000</MIDV>
+    <MIDV Type="DOUBLE" Abs="0" Ord="3">200.000000000000000</MIDV>
+    <MIDV Type="DOUBLE" Abs="0" Ord="4">200.000000000000000</MIDV>
+    <MIDV Type="DOUBLE" Abs="0" Ord="5">200.000000000000000</MIDV>
+   </FldVector>
+   <FldVector>
+    <OTMWGH Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</OTMWGH>
+    <OTMWGH Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</OTMWGH>
+    <OTMWGH Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</OTMWGH>
+    <OTMWGH Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</OTMWGH>
+    <OTMWGH Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</OTMWGH>
+    <OTMWGH Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</OTMWGH>
+   </FldVector>
+   <FldVector>
+    <OTMWGS Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</OTMWGS>
+    <OTMWGS Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</OTMWGS>
+    <OTMWGS Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</OTMWGS>
+    <OTMWGS Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</OTMWGS>
+    <OTMWGS Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</OTMWGS>
+    <OTMWGS Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</OTMWGS>
+   </FldVector>
+   <FldVector>
+    <PIVOT Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</PIVOT>
+    <PIVOT Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</PIVOT>
+    <PIVOT Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</PIVOT>
+    <PIVOT Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</PIVOT>
+    <PIVOT Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</PIVOT>
+    <PIVOT Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</PIVOT>
+   </FldVector>
+   <FldVector>
+    <SSTRIK Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</SSTRIK>
+    <SSTRIK Type="DOUBLE" Abs="0" Ord="1">0.000000000000000</SSTRIK>
+    <SSTRIK Type="DOUBLE" Abs="0" Ord="2">0.000000000000000</SSTRIK>
+    <SSTRIK Type="DOUBLE" Abs="0" Ord="3">0.000000000000000</SSTRIK>
+    <SSTRIK Type="DOUBLE" Abs="0" Ord="4">0.000000000000000</SSTRIK>
+    <SSTRIK Type="DOUBLE" Abs="0" Ord="5">0.000000000000000</SSTRIK>
+   </FldVector>
+   <FldVector>
+    <UPV Type="DOUBLE" Abs="0" Ord="0">100.000000000000000</UPV>
+    <UPV Type="DOUBLE" Abs="0" Ord="1">100.000000000000000</UPV>
+    <UPV Type="DOUBLE" Abs="0" Ord="2">100.000000000000000</UPV>
+    <UPV Type="DOUBLE" Abs="0" Ord="3">100.000000000000000</UPV>
+    <UPV Type="DOUBLE" Abs="0" Ord="4">100.000000000000000</UPV>
+    <UPV Type="DOUBLE" Abs="0" Ord="5">100.000000000000000</UPV>
+   </FldVector>
+   <FldVector>
+    <WEIGHT Type="DOUBLE" Abs="0" Ord="0">1.000000000000000</WEIGHT>
+    <WEIGHT Type="DOUBLE" Abs="0" Ord="1">1.000000000000000</WEIGHT>
+    <WEIGHT Type="DOUBLE" Abs="0" Ord="2">1.000000000000000</WEIGHT>
+    <WEIGHT Type="DOUBLE" Abs="0" Ord="3">1.000000000000000</WEIGHT>
+    <WEIGHT Type="DOUBLE" Abs="0" Ord="4">1.000000000000000</WEIGHT>
+    <WEIGHT Type="DOUBLE" Abs="0" Ord="5">1.000000000000000</WEIGHT>
+   </FldVector>
+  </Block>
+  <Block Type="4">Fixing
+   <FXNG_ARCH Type="CHAR" Abs="1" Ord="0"></FXNG_ARCH>
+   <FXNG_ARCH_COLUMN Type="CHAR" Abs="1" Ord="0"></FXNG_ARCH_COLUMN>
+   <FXNG_ASI_LINE Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</FXNG_ASI_LINE>
+   <FXNG_END Type="DATE" Abs="1" Ord="0">0</FXNG_END>
+   <FXNG_FF Type="DOUBLE" Abs="1" Ord="0">1.000000000000000</FXNG_FF>
+   <FXNG_GEN_SAVE Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</FXNG_GEN_SAVE>
+   <FXNG_LINE Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</FXNG_LINE>
+   <FXNG_MODEL Type="CHAR" Abs="1" Ord="0">Harmonic</FXNG_MODEL>
+   <FXNG_QUOTATION Num="USD" Den="EUR" FF="0.000000" Type="QUOTATION_MODE" Abs="1" Ord="0">EUR/USD</FXNG_QUOTATION>
+   <FXNG_SCHD Type="CHAR" Abs="1" Ord="0"></FXNG_SCHD>
+   <FXNG_START Type="DATE" Abs="1" Ord="0">0</FXNG_START>
+   <FXNG_TYPE Type="CHAR" Abs="1" Ord="0">Fixed Strike</FXNG_TYPE>
+   <FldVector>
+    <FXNG_DATE Type="DATE" Abs="1" Ord="0">0</FXNG_DATE>
+   </FldVector>
+   <FldVector>
+    <FXNG_VALUE Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</FXNG_VALUE>
+   </FldVector>
+   <FldVector>
+    <FXNG_VALUE_DATE Type="DATE" Abs="1" Ord="0">0</FXNG_VALUE_DATE>
+   </FldVector>
+   <FldVector>
+    <FXNG_WEIGHT Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</FXNG_WEIGHT>
+   </FldVector>
+  </Block>
+  <Block Type="5">TARN_BAR
+   <ACFSTE Type="BOOLEAN" Abs="2" Ord="0">0</ACFSTE>
+   <ACFSTK Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</ACFSTK>
+   <ARCH Type="CHAR" Abs="2" Ord="0">ECB:Fixing</ARCH>
+   <BARDN Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</BARDN>
+   <BARHIT Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</BARHIT>
+   <BARUP Type="DOUBLE" Abs="2" Ord="0">1.180000000000000</BARUP>
+   <BOWNSC Type="BOOLEAN" Abs="2" Ord="0">0</BOWNSC>
+   <CKILOW Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</CKILOW>
+   <CKIMID Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</CKIMID>
+   <CKISTR Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</CKISTR>
+   <CKIUP Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</CKIUP>
+   <CNBFIX Type="BOOLEAN" Abs="2" Ord="0">0</CNBFIX>
+   <EDATE Type="DATE" Abs="2" Ord="0">13348</EDATE>
+   <FXNG_LINE Type="DOUBLE" Abs="2" Ord="0">6.000000000000000</FXNG_LINE>
+   <HASKI Type="BOOLEAN" Abs="2" Ord="0">0</HASKI>
+   <HKIDAT Type="DATE" Abs="2" Ord="0">0</HKIDAT>
+   <INBFIX Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</INBFIX>
+   <KIDATE Type="BOOLEAN" Abs="2" Ord="0">0</KIDATE>
+   <KIREB Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</KIREB>
+   <KIREBT Type="CHAR" Abs="2" Ord="0">Fixed</KIREBT>
+   <KISTYL Type="CHAR" Abs="2" Ord="0">Up and Out</KISTYL>
+   <KITYPE Type="CHAR" Abs="2" Ord="0">Continuous</KITYPE>
+   <LIVHIT Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</LIVHIT>
+   <RBQUOT Type="CHAR" Abs="2" Ord="0">DEN%</RBQUOT>
+   <SCHD Type="CHAR" Abs="2" Ord="0"></SCHD>
+   <SDATE Type="DATE" Abs="2" Ord="0">13189</SDATE>
+   <STKRDF Type="BOOLEAN" Abs="2" Ord="0">0</STKRDF>
+   <FldVector>
+    <FXDATE Type="DATE" Abs="2" Ord="0">13196</FXDATE>
+    <FXDATE Type="DATE" Abs="2" Ord="1">13225</FXDATE>
+    <FXDATE Type="DATE" Abs="2" Ord="2">13257</FXDATE>
+    <FXDATE Type="DATE" Abs="2" Ord="3">13286</FXDATE>
+    <FXDATE Type="DATE" Abs="2" Ord="4">13317</FXDATE>
+    <FXDATE Type="DATE" Abs="2" Ord="5">13348</FXDATE>
+   </FldVector>
+   <FldVector>
+    <FXLVLD Type="DOUBLE" Abs="2" Ord="0">0.000000000000000</FXLVLD>
+    <FXLVLD Type="DOUBLE" Abs="2" Ord="1">0.000000000000000</FXLVLD>
+    <FXLVLD Type="DOUBLE" Abs="2" Ord="2">0.000000000000000</FXLVLD>
+    <FXLVLD Type="DOUBLE" Abs="2" Ord="3">0.000000000000000</FXLVLD>
+    <FXLVLD Type="DOUBLE" Abs="2" Ord="4">0.000000000000000</FXLVLD>
+    <FXLVLD Type="DOUBLE" Abs="2" Ord="5">0.000000000000000</FXLVLD>
+   </FldVector>
+   <FldVector>
+    <FXLVLU Type="DOUBLE" Abs="2" Ord="0">1.180000000000000</FXLVLU>
+    <FXLVLU Type="DOUBLE" Abs="2" Ord="1">1.180000000000000</FXLVLU>
+    <FXLVLU Type="DOUBLE" Abs="2" Ord="2">1.180000000000000</FXLVLU>
+    <FXLVLU Type="DOUBLE" Abs="2" Ord="3">1.180000000000000</FXLVLU>
+    <FXLVLU Type="DOUBLE" Abs="2" Ord="4">1.180000000000000</FXLVLU>
+    <FXLVLU Type="DOUBLE" Abs="2" Ord="5">1.180000000000000</FXLVLU>
+   </FldVector>
+   <FldVector>
+    <KIRBTV Type="CHAR" Abs="2" Ord="0">Fixed</KIRBTV>
+    <KIRBTV Type="CHAR" Abs="2" Ord="1">Fixed</KIRBTV>
+    <KIRBTV Type="CHAR" Abs="2" Ord="2">Fixed</KIRBTV>
+    <KIRBTV Type="CHAR" Abs="2" Ord="3">Fixed</KIRBTV>
+    <KIRBTV Type="CHAR" Abs="2" Ord="4">Fixed</KIRBTV>
+    <KIRBTV Type="CHAR" Abs="2" Ord="5">Fixed</KIRBTV>
+   </FldVector>
+  </Block>
+  <Block Type="1">Main
+   <BUYSELL Type="DATE" Abs="3" Ord="0">1</BUYSELL>
+   <COMMON_CCY Type="CHAR" Abs="3" Ord="0"></COMMON_CCY>
+   <DEAL_NB Type="DOUBLE" Abs="3" Ord="0">0.000000000000000</DEAL_NB>
+   <EQ_QTY_CCY Type="CHAR" Abs="3" Ord="0">USD</EQ_QTY_CCY>
+   <EQ_QUANTITY Type="DOUBLE" Abs="3" Ord="0">0.000000000000000</EQ_QUANTITY>
+   <EXOTIC_STYLE Type="DATE" Abs="3" Ord="0">0</EXOTIC_STYLE>
+   <EXPIRY Type="DATE" Abs="3" Ord="0">13348</EXPIRY>
+   <FORMULA Type="CHAR" Abs="3" Ord="0"></FORMULA>
+   <GEOMETRIC_CONSTANT Type="DOUBLE" Abs="3" Ord="0">0.000000000000000</GEOMETRIC_CONSTANT>
+   <INITIAL_QUANTITY Type="DOUBLE" Abs="3" Ord="0">0.000000000000000</INITIAL_QUANTITY>
+   <MX_CLASS Type="CHAR" Abs="3" Ord="0"></MX_CLASS>
+   <MX_DELIV Type="DATE" Abs="3" Ord="0">13350</MX_DELIV>
+   <MX_FILE Type="CHAR" Abs="3" Ord="0"></MX_FILE>
+   <MX_SMC Type="CHAR" Abs="3" Ord="0">EUR</MX_SMC>
+   <NB_RI Type="DATE" Abs="3" Ord="0">1</NB_RI>
+   <PAY_CCY Type="CHAR" Abs="3" Ord="0">EUR</PAY_CCY>
+   <PL_INSTRUMENT Type="CHAR" Abs="3" Ord="0">EUR/USD</PL_INSTRUMENT>
+   <QTY_CCY Type="CHAR" Abs="3" Ord="0">EUR</QTY_CCY>
+   <QTY_CCY_RI Type="CHAR" Abs="3" Ord="0">EUR</QTY_CCY_RI>
+   <QTY_RI Type="DOUBLE" Abs="3" Ord="0">6000000.000000000000000</QTY_RI>
+   <QUANTITY Type="DOUBLE" Abs="3" Ord="0">6000000.000000000000000</QUANTITY>
+   <QUANTO_CURRENCY Type="CHAR" Abs="3" Ord="0"></QUANTO_CURRENCY>
+   <QUOTATION_RI Type="CHAR" Abs="3" Ord="0">EUR-USD</QUOTATION_RI>
+   <STRIKE_QUOTATION Num="USD" Den="EUR" FF="0.000000" Type="QUOTATION_MODE" Abs="3" Ord="0">EUR/USD</STRIKE_QUOTATION>
+   <TEMPLATE Type="CHAR" Abs="3" Ord="0">TARN</TEMPLATE>
+   <FldVector>
+    <RISK_QTY Type="DOUBLE" Abs="3" Ord="0">6000000.000000000000000</RISK_QTY>
+   </FldVector>
+   <FldVector>
+    <RISK_QUOT Num="USD" Den="EUR" FF="1.000000" Type="QUOTATION_MODE" Abs="3" Ord="0">EUR/USD</RISK_QUOT>
+   </FldVector>
+   <FldVector>
+    <RISK_STRIKE Type="DOUBLE" Abs="3" Ord="0">0.000000000000000</RISK_STRIKE>
+   </FldVector>
+  </Block>
+ </Template>
+</FxfiTransaction>

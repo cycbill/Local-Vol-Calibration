@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE FxfiTransaction>
+<FxfiTransaction>
+ <ProductID>-1</ProductID>
+ <Template>
+  <Block Type="2">Option
+   <CALL_PUT Type="CHAR" Abs="0" Ord="0">Call</CALL_PUT>
+   <CUT_OFF Type="CHAR" Abs="0" Ord="0">NYC</CUT_OFF>
+   <DELIVERY Type="DATE" Abs="0" Ord="0">13281</DELIVERY>
+   <DELIVERY_TYPE Type="DATE" Abs="0" Ord="0">1</DELIVERY_TYPE>
+   <DIGITAL Type="DOUBLE" Abs="0" Ord="0">0.000000000000000</DIGITAL>
+   <DIGITALCCY Type="CHAR" Abs="0" Ord="0"></DIGITALCCY>
+   <DIGITALRATE Type="DOUBLE" Abs="0" Ord="0">100.000000000000000</DIGITALRATE>
+   <EXPIRY Type="DATE" Abs="0" Ord="0">13279</EXPIRY>
+   <FORWARD_START_STYLE Type="DATE" Abs="0" Ord="0">0</FORWARD_START_STYLE>
+   <FWDSTART_K_MARGIN_STYLE Type="CHAR" Abs="0" Ord="0">Factor</FWDSTART_K_MARGIN_STYLE>
+   <K_LEVEL Type="DOUBLE" Abs="0" Ord="0">0.010000000000000</K_LEVEL>
+   <REGULAR_DELIVERY Type="DATE" Abs="0" Ord="0">13281</REGULAR_DELIVERY>
+   <START Type="DATE" Abs="0" Ord="0">0</START>
+   <STRIKE Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</STRIKE>
+   <STRIKE_QUOTATION Num="USD" Den="EUR" FF="1.000000" Type="QUOTATION_MODE" Abs="0" Ord="0">EUR/USD</STRIKE_QUOTATION>
+   <STYLE Type="CHAR" Abs="0" Ord="0">European</STYLE>
+   <TREATED_STRIKE Type="DOUBLE" Abs="0" Ord="0">1.083000000000000</TREATED_STRIKE>
+  </Block>
+  <Block Type="1">Main
+   <BUYSELL Type="DATE" Abs="1" Ord="0">1</BUYSELL>
+   <COMMON_CCY Type="CHAR" Abs="1" Ord="0"></COMMON_CCY>
+   <DEAL_NB Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</DEAL_NB>
+   <EQ_QTY_CCY Type="CHAR" Abs="1" Ord="0">EUR</EQ_QTY_CCY>
+   <EQ_QUANTITY Type="DOUBLE" Abs="1" Ord="0">1000000.000000000000000</EQ_QUANTITY>
+   <EXOTIC_STYLE Type="DATE" Abs="1" Ord="0">0</EXOTIC_STYLE>
+   <EXPIRY Type="DATE" Abs="1" Ord="0">13279</EXPIRY>
+   <FORMULA Type="CHAR" Abs="1" Ord="0">MUREX_SMP</FORMULA>
+   <GEOMETRIC_CONSTANT Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</GEOMETRIC_CONSTANT>
+   <INITIAL_QUANTITY Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</INITIAL_QUANTITY>
+   <MX_CLASS Type="CHAR" Abs="1" Ord="0"></MX_CLASS>
+   <MX_DELIV Type="DATE" Abs="1" Ord="0">13281</MX_DELIV>
+   <MX_FILE Type="CHAR" Abs="1" Ord="0"></MX_FILE>
+   <MX_SMC Type="CHAR" Abs="1" Ord="0">EUR</MX_SMC>
+   <NB_RI Type="DATE" Abs="1" Ord="0">1</NB_RI>
+   <PAY_CCY Type="CHAR" Abs="1" Ord="0">EUR</PAY_CCY>
+   <PL_INSTRUMENT Type="CHAR" Abs="1" Ord="0">EUR/USD</PL_INSTRUMENT>
+   <QTY_CCY Type="CHAR" Abs="1" Ord="0">EUR</QTY_CCY>
+   <QTY_CCY_RI Type="CHAR" Abs="1" Ord="0">USD</QTY_CCY_RI>
+   <QTY_RI Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</QTY_RI>
+   <QUANTITY Type="DOUBLE" Abs="1" Ord="0">1083000.000000000000000</QUANTITY>
+   <QUANTO_CURRENCY Type="CHAR" Abs="1" Ord="0"></QUANTO_CURRENCY>
+   <QUOTATION_RI Type="CHAR" Abs="1" Ord="0"></QUOTATION_RI>
+   <TEMPLATE Type="CHAR" Abs="1" Ord="0">MUREX_SMP</TEMPLATE>
+   <FldVector>
+    <RISK_QTY Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</RISK_QTY>
+   </FldVector>
+   <FldVector>
+    <RISK_QUOT Num="" Den="" FF="0.000000" Type="QUOTATION_MODE" Abs="1" Ord="0">EUR/USD</RISK_QUOT>
+   </FldVector>
+   <FldVector>
+    <RISK_STRIKE Type="DOUBLE" Abs="1" Ord="0">0.000000000000000</RISK_STRIKE>
+   </FldVector>
+  </Block>
+ </Template>
+</FxfiTransaction>
