@@ -6,8 +6,8 @@ from matplotlib import cm
 
 from vtk_visualization import vtk_visualization
 
-folder = r'D:\OneDrive - Murex\Desktop\Local Vol Calibration\data\Local Vol Macs Traces\Single Continuous Partial Barrier'
-file = 'pde1d_mx21483vm_11652_9.vtk'
+folder = r'D:\OneDrive - Murex\Desktop\Local Vol Calibration\data\Local Vol Macs Traces\Vanilla TARF'
+file = 'pde1d_mx21483vm_11652_22.vtk'
 
 vtk_data = pd.read_csv(folder + '\\' + file)
 vtk_data.columns = ['Data']
